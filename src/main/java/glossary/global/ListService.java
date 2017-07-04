@@ -1,4 +1,4 @@
-package global;
+package glossary.global;
 
 /**
  * Created by Pavel Máca <maca.pavel@gmail.com> on 04.07.2017.
