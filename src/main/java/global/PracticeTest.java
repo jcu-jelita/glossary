@@ -3,7 +3,7 @@ package global;
 /**
  * Created by Papi on 4. 7. 2017.
  */
-public interface Practice {
+public interface PracticeTest {
     String getNext();
     String getAnswer();
     void setDifficulty(Difficulty difficulty);
