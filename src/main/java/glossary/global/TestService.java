@@ -5,6 +5,6 @@ package glossary.global;
  */
 public interface TestService {
     int getWordCount(int listId);
-    WritingTest createWritingTest(int wordCount);
-    PracticeTest cretePracticeTest(int wordCount);
+    WritingTest createWritingTest(int listId, int wordCount);
+    PracticeTest cretePracticeTest(int listId, int wordCount);
 }
