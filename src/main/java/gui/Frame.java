@@ -100,13 +100,9 @@ public class Frame extends JFrame {
         panel.add(bt_addList);
         panel.add(bt_exit);
 
-        bt_addList.addActionListener((ActionEvent e) -> {
-            cardLayout.show(jPanel_cards, CARD_CREATE);
-        });
+        bt_addList.addActionListener((ActionEvent e) -> cardLayout.show(jPanel_cards, CARD_CREATE));
         
-        bt_exit.addActionListener((ActionEvent e) -> {
-            System.exit(0);
-        });
+        bt_exit.addActionListener((ActionEvent e) -> System.exit(0));
 
         return panel;
     }
