@@ -5,6 +5,9 @@
  */
 package glossary.gui;
 
+import glossary.global.CardList;
+import glossary.global.ListService;
+
 import java.util.HashMap;
 
 /**
@@ -15,30 +18,26 @@ public class Temporary {
     
 
     public static void main(String[] args) {
-               Frame frame = new Frame(new Iface() {
-                                     @Override
-                   public boolean deleteList(String listName) {
-                       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+               Frame frame = new Frame(new ListService() {
+
+                   @Override
+                   public CardList[] getLitOverview() {
+                       return new CardList[0];
                    }
 
                    @Override
-                   public boolean editList(String listName) {
-                       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                   public CardList getLitDetail(int id) {
+                       return null;
                    }
 
                    @Override
-                   public boolean deleteFromList(String listName, String key) {
-                       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                   public CardList save(CardList cardList) {
+                       return null;
                    }
 
                    @Override
-                   public boolean updateList(String listName, HashMap Translations) {
-                       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                   }
-
-                   @Override
-                   public String[] getListNames() {
-                       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                   public boolean remove(int listId) {
+                       return false;
                    }
                });
                 frame.setVisible(true);

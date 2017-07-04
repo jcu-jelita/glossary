@@ -5,19 +5,15 @@
  */
 package glossary.gui;
 
+import glossary.global.ListService;
+
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 /**
  *
@@ -25,7 +21,7 @@ import javax.swing.JTextField;
  */
 public class Frame extends JFrame {
 
-    private final Iface iface;
+    private final ListService listService;
     private final int FRAME_WIDTH = 800;
     private final int FRAME_HEIGHT = 600;
     private final String CARD_MENU = "menu";
@@ -37,8 +33,8 @@ public class Frame extends JFrame {
     private JPanel jPanel_cards;
     private CardLayout cardLayout;
 
-    public Frame(Iface iface) {
-        this.iface = iface;
+    public Frame(ListService listService) {
+        this.listService = listService;
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -111,7 +107,7 @@ public class Frame extends JFrame {
 
         Dimension dim;
         Rectangle rec;
-        JLabel s_createList = new JLabel("Create new list");
+        JLabel s_createList = new JLabel("Create new list", SwingConstants.CENTER);
         JLabel s_listName = new JLabel("List Name:");
         JTextField tf_listName = new JTextField();
         JTable t_Cards = new JTable();
@@ -119,30 +115,31 @@ public class Frame extends JFrame {
         JButton bt_confirm = new JButton("Confirm");
         JButton bt_cancel = new JButton("Cancel");
 
-        dim = new Dimension(200,50);
+        dim = new Dimension(600,50);
         rec = new Rectangle(100,0, dim.width, dim.height);
-        s_createList.setBounds(rec);
         setFontSize(s_createList, dim);
+        s_createList.setBounds(rec);
+
         
         dim = new Dimension(200, 50);
         rec = new Rectangle(100, 50, dim.width, dim.height);
         setFontSize(s_listName, dim);
         s_listName.setBounds(rec);
 
-        dim = new Dimension(400, 50);
-        rec = new Rectangle(300, 50, dim.width, dim.height);
+        dim = new Dimension(400, 30);
+        rec = new Rectangle(300, 70, dim.width, dim.height);
         tf_listName.setBounds(rec);
 
         dim = new Dimension(600, 350);
         rec = new Rectangle(100, 100, dim.width, dim.height);
         sp_Cards.setBounds(rec);
 
-        dim = new Dimension(200, 100);
-        rec = new Rectangle(100, 100, dim.width, dim.height);
+        dim = new Dimension(200, 50);
+        rec = new Rectangle(100, 470, dim.width, dim.height);
         bt_confirm.setBounds(rec);
 
-        dim = new Dimension(200, 100);
-        rec = new Rectangle(100, 100, dim.width, dim.height);
+        dim = new Dimension(200, 50);
+        rec = new Rectangle(500, 470, dim.width, dim.height);
         bt_cancel.setBounds(rec);
         
         
@@ -152,6 +149,8 @@ public class Frame extends JFrame {
         panel.add(sp_Cards);
         panel.add(bt_confirm);
         panel.add(bt_cancel);
+
+        bt_cancel.addActionListener((ActionEvent e) ->cardLayout.show(jPanel_cards, CARD_MENU));
         
 
         return panel;
