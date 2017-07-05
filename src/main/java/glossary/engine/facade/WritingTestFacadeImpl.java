@@ -1,5 +1,6 @@
 package glossary.engine.facade;
 
+import glossary.engine.dao.CardDao;
 import glossary.engine.model.Card;
 
 /**
@@ -7,7 +8,8 @@ import glossary.engine.model.Card;
  */
 public class WritingTestFacadeImpl implements WritingTestFacade {
 
-    public WritingTestFacadeImpl(int wordCount) {
+    public WritingTestFacadeImpl(int wordCount, int cardListId, CardDao cardDao) {
+
     }
 
     @Override
