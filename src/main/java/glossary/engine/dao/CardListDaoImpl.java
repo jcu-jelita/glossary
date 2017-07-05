@@ -20,9 +20,7 @@ public class CardListDaoImpl extends BaseDaoImpl implements CardListDao {
 
     @Override
     public List<CardList> findAll() {
-
         ArrayList<CardList> list = new ArrayList<>();
-
         try {
             Statement stmt = connection.createStatement();
 
@@ -37,26 +35,49 @@ public class CardListDaoImpl extends BaseDaoImpl implements CardListDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return list;
     }
 
     @Override
     public CardList save(CardList cardList, List<Card> cards) {
-        //TODO transaction
-        CardList cardListSaved = saveCardList(cardList);
-        if (cardListSaved == null) {
-            return null;
-        }
+        try {
+            // Start transaction
+            connection.setAutoCommit(false);
 
-        for (Card card : cards) {
-            card.setCardListId(cardListSaved.getId());
-            if (cardDao.save(card) == null) {
-                // TODO revert transaction and print error
+            CardList cardListSaved = saveCardList(cardList);
+            if (cardListSaved == null) {
+                return null;
+            }
+
+            for (Card card : cards) {
+                card.setCardListId(cardListSaved.getId());
+                if (cardDao.save(card) == null) {
+                    connection.rollback();
+                    connection.setAutoCommit(true);
+                    return null;
+                }
+            }
+
+            // Comit transaction
+            connection.commit();
+            return cardListSaved;
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException excep) {
+                e.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                // End trasaction
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
 
-        return cardListSaved;
+        return null;
     }
 
     @Override
