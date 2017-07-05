@@ -59,7 +59,7 @@ public class GlossaryEngine {
                 createDatabase();
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+           e.printStackTrace();
             throw new DatabaseException("Nelze se připojit k databázi.");
         }
     }
