@@ -25,20 +25,20 @@ public class GlossaryEngine {
 
 
     public GlossaryEngine() throws DatabaseException {
-       // createDatabaseConnection();
+       createDatabaseConnection();
     }
 
     public CardListDao getCardListDao() {
-        return new CardListDaoMock();
+        return new CardListDaoImpl(connection, getCardDao());
     }
 
     public CardDao getCardDao() {
-        return new CardDaoMock();
+        return new CardDaoImpl(connection);
     }
 
 
-    public WritingTestFacade startWritingTest(int wordCount) {
-        return new WritingTestFacadeMock();
+    public WritingTestFacade startWritingTest(int wordCount, int cardlistId) {
+        return new WritingTestFacadeImpl(wordCount, cardlistId, getCardDao());
     }
 
     protected void createDatabaseConnection() throws DatabaseException {
@@ -59,7 +59,7 @@ public class GlossaryEngine {
                 createDatabase();
             }
         } catch (SQLException e) {
-           e.printStackTrace();
+            e.printStackTrace();
             throw new DatabaseException("Nelze se připojit k databázi.");
         }
     }
