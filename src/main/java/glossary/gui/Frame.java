@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 /**
  * @author Papi
@@ -35,7 +34,8 @@ public class Frame extends JFrame {
     private CardLayout cardLayout;
     private DefaultTableModel dm;
     private JTextField tf_listName;
-    private JTable table;
+    private JTable tableLibrary_create;
+    private JTable tableLibraries_menu;
 
     public Frame(GlossaryEngine engine) {
         this.engine = engine;
@@ -112,7 +112,7 @@ public class Frame extends JFrame {
         DefaultTableModel dm = new DefaultTableModel();
         dm.setDataVector(getDataVector(), new Object[]{"Name", "Run", "Edit", "Delete"});
 
-        JTable table = new JTable(dm){
+        tableLibraries_menu = new JTable(dm){
             public boolean isCellEditable(int row, int column){
                 if (column == 0){
                     return false;
@@ -122,21 +122,23 @@ public class Frame extends JFrame {
                 }
             }
         };
-        table.setShowGrid(false);
-        table.setFont(new Font("Arial", Font.BOLD, 40));
+        tableLibraries_menu.setShowGrid(false);
+        tableLibraries_menu.setFont(new Font("Arial", Font.BOLD, 40));
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
         renderer.setHorizontalAlignment(JLabel.CENTER);
-        table.getColumnModel().getColumn(0).setCellRenderer(renderer);
-        table.getColumnModel().getColumn(0).setMinWidth(375);
-        table.getColumnModel().getColumn(1).setPreferredWidth(75);
-        table.getColumnModel().getColumn(2).setPreferredWidth(75);
-        table.getColumnModel().getColumn(3).setPreferredWidth(75);
-        table.setRowHeight(75);
-        table.getColumn("Run").setCellRenderer(new ButtonRenderer());
-        table.getColumn("Run").setCellEditor(new ButtonEditor(new JCheckBox(), this));
-        table.getColumn("Edit").setCellRenderer(new ButtonRenderer());
-        table.getColumn("Delete").setCellRenderer(new ButtonRenderer());
-        return table;
+        tableLibraries_menu.getColumnModel().getColumn(0).setCellRenderer(renderer);
+        tableLibraries_menu.getColumnModel().getColumn(0).setMinWidth(375);
+        tableLibraries_menu.getColumnModel().getColumn(1).setPreferredWidth(75);
+        tableLibraries_menu.getColumnModel().getColumn(2).setPreferredWidth(75);
+        tableLibraries_menu.getColumnModel().getColumn(3).setPreferredWidth(75);
+        tableLibraries_menu.setRowHeight(75);
+        tableLibraries_menu.getColumn("Run").setCellRenderer(new ButtonRenderer());
+        tableLibraries_menu.getColumn("Run").setCellEditor(new ButtonEditor(new JCheckBox(), this));
+        tableLibraries_menu.getColumn("Edit").setCellRenderer(new ButtonRenderer());
+        tableLibraries_menu.getColumn("Edit").setCellEditor(new ButtonEditor(new JCheckBox(), this));
+        tableLibraries_menu.getColumn("Delete").setCellRenderer(new ButtonRenderer());
+        tableLibraries_menu.getColumn("Delete").setCellEditor(new ButtonEditor(new JCheckBox(), this));
+        return tableLibraries_menu;
     }
 
     private JPanel createPanelCreate() {
@@ -147,8 +149,8 @@ public class Frame extends JFrame {
         JLabel s_listName = new JLabel("List Name:");
         tf_listName = new JTextField();
         dm = new DefaultTableModel();
-        table = createLibraryTable(dm);
-        JScrollPane spCards = new JScrollPane(table);
+        tableLibrary_create = createLibraryTable(dm);
+        JScrollPane spCards = new JScrollPane(tableLibrary_create);
 
         JButton bt_addWord = new JButton("Add new word");
         spCards.add(bt_addWord);
@@ -198,7 +200,7 @@ public class Frame extends JFrame {
         panel.add(bt_cancel);
 
         bt_cancel.addActionListener((ActionEvent e) -> {
-            if (dm.getRowCount() > 0 || tf_listName.getText().equals("")) {
+            if (dm.getRowCount() > 0 || !tf_listName.getText().equals("")) {
                 Object[] options = {"Delete",
                         "Cancel"};
                 int n = JOptionPane.showOptionDialog(this,
@@ -331,14 +333,24 @@ public class Frame extends JFrame {
         label.setFont(new Font("ComicSans", Font.PLAIN, fontSizeToUse));
     }
 
-    protected void startTest() {
+    protected void startTest(int row) {
+        System.out.println(row);
+       String listName = (String) tableLibraries_menu.getValueAt(row, 0);
+        System.out.println("Start test of " + listName);
     }
 
-    protected void editList() {
+    protected void editList(int row) {
+        System.out.println(row);
+        String listName = (String) tableLibraries_menu.getValueAt(row, 0);
+        System.out.println("Edit " + listName);
     }
 
-    protected void eraseList() {
+    protected void eraseList(int row) {
+        System.out.println(row);
+        String listName = (String) tableLibraries_menu.getValueAt(row, 0);
+        System.out.println("Delete " + listName);
     }
+
 
     public Object[][] getDataVector() {
         int columnCount = 4;
