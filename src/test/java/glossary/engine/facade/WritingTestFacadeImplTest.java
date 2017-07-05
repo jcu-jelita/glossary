@@ -21,7 +21,10 @@ public class WritingTestFacadeImplTest extends TestCase {
     }
 
     public void testVerify() throws Exception {
-
+        CardDao cardDao = new CardDaoMock();
+        WritingTestFacadeImpl writingTestFacade = new WritingTestFacadeImpl(2, 0, cardDao);
+        assertFalse(writingTestFacade.verify(null));
+        assertTrue(writingTestFacade.verify(writingTestFacade.current.getWord2()));
     }
 
     public void testGetAnswer() throws Exception {
