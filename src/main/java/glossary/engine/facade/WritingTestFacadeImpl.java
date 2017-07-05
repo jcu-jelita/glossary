@@ -25,10 +25,6 @@ public class WritingTestFacadeImpl implements WritingTestFacade {
         iterator = cards.listIterator();
     }
 
-    public Card getCurrent() {
-        return current;
-    }
-
     @Override
     public Card getNext() {
         if (iterator.hasNext()) {
