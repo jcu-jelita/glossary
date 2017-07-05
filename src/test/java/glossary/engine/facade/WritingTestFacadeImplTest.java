@@ -26,7 +26,7 @@ public class WritingTestFacadeImplTest extends TestCase {
         assertFalse(writingTestFacade.verify(null));
 
         // curent is null
-        assertTrue(writingTestFacade.verify("Ahoj"));
+        assertFalse(writingTestFacade.verify("Ahoj"));
 
         // move to first card
         writingTestFacade.getNext();
