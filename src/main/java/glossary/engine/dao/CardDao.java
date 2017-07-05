@@ -6,9 +6,6 @@ import glossary.engine.model.CardList;
 import java.util.List;
 
 /**
- * Created by Pavel Máca <maca.pavel@gmail.com> on 05.07.2017.
- */
-/**
  * Provide data access to Card storage
  */
 public interface CardDao {
@@ -19,19 +16,22 @@ public interface CardDao {
      * @return List is empty when listId doesn't exists
      */
     List<Card> findAllByCardListId(int listId);
+
     /**
      * Save new or existing Card
      * If Card.id is null, then new Card i created, otherwice update existing Card by id.
      *
      * @param card Card to save
-     * @return true in succes
+     * @return NULL on error
      */
-    boolean save(Card card);
+    Card save(Card card);
+
     /**
      * @param cardId Card id to remove
      * @return true on succes
      */
     boolean remove(int cardId);
+
     /**
      * Count total number of Cards in given list
      *
@@ -39,6 +39,7 @@ public interface CardDao {
      * @return number or cards, 0 if CardList is empty, or not found
      */
     int countByCardListId(int listId);
+
     /**
      * Randomly pick given number of Cards from list
      *

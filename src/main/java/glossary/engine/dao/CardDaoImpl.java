@@ -10,11 +10,11 @@ import java.util.List;
 /**
  * Created by Pavel Máca <maca.pavel@gmail.com> on 05.07.2017.
  */
-public class CardDaoImpl implements CardDao {
-    Connection connection;
+public class CardDaoImpl extends BaseDaoImpl implements CardDao {
+
 
     public CardDaoImpl(Connection connection) {
-        this.connection = connection;
+        super(connection);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class CardDaoImpl implements CardDao {
     }
 
     @Override
-    public boolean save(Card card) {
+    public Card save(Card card) {
 
         try {
             PreparedStatement stmt = connection.prepareStatement("INSERT INTO card(id_list, word_1, word_2) VALUES(?, ?, ?)");
@@ -46,12 +46,15 @@ public class CardDaoImpl implements CardDao {
             stmt.setString(2, card.getWord1());
             stmt.setString(3, card.getWord2());
             if (stmt.executeUpdate() > 0) {
-                return true;
+                ResultSet rs = stmt.getGeneratedKeys();
+                card.setId(rs.getInt(1));
+
+                return card;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return null;
     }
 
     @Override

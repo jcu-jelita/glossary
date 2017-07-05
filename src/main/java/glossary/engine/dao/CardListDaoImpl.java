@@ -46,10 +46,13 @@ public class CardListDaoImpl extends BaseDaoImpl implements CardListDao {
     public CardList save(CardList cardList, List<Card> cards) {
         //TODO transaction
         CardList cardListSaved = saveCardList(cardList);
-
+        if (cardListSaved == null) {
+            return null;
+        }
 
         for (Card card : cards) {
-            if (!cardDao.save(card)) {
+            card.setCardListId(cardListSaved.getId());
+            if (cardDao.save(card) == null) {
                 // TODO revert transaction and print error
             }
         }
@@ -60,7 +63,6 @@ public class CardListDaoImpl extends BaseDaoImpl implements CardListDao {
     @Override
     public boolean remove(int listId) {
         try {
-            //TODO update
             PreparedStatement stmt = connection.prepareStatement("DELETE FROM list WHERE id = ?");
 
             stmt.setInt(1, listId);

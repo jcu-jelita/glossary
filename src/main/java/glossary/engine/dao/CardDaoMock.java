@@ -40,8 +40,8 @@ public class CardDaoMock implements CardDao {
      * @return true always for testing purposes
      */
     @Override
-    public boolean save(Card card) {
-        return true;
+    public Card save(Card card) {
+        return new Card(1,1, "ice", "led");
     }
 
     /**
