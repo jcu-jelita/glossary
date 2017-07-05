@@ -19,7 +19,7 @@ public class CardListDaoMock implements CardListDao {
     public CardList save(CardList cardList, List<Card> cards) {
         return null;
     }
-
+    //Udělat konstruktor
     @Override
     public boolean remove(int listId) {
         return false;

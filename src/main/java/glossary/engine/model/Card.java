@@ -5,17 +5,24 @@ package glossary.engine.model;
  */
 public class Card {
     private int id;
-    private CardList cardList;
+    private int cardList;
 
     private String word1;
     private String word2;
+
+    public Card(int id, int cardList, String word1, String word2) {
+        this.id = id;
+        this.cardList = 0;
+        this.word1 = word1;
+        this.word2 = word2;
+    }
 
     public int getId() {
         return id;
     }
 
-    public CardList getCardList() {
-        return cardList;
+    public int getCardList() {
+        return 0;
     }
 
     public String getWord1() {
