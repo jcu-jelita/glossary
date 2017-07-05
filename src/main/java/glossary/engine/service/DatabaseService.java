@@ -42,16 +42,7 @@ public class DatabaseService {
             System.out.println("Connection to SQLite has been established.");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-        } /*finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
-        }*/
-
+        }
         return connection;
     }
 
@@ -59,20 +50,30 @@ public class DatabaseService {
         try {
             Statement statement = getConnection().createStatement();
             statement.executeUpdate("CREATE TABLE 'card' (" +
-                    "  'id' integer NOT NULL PRIMARY KEY AUTOINCREMENT," +
-                    "  'id_list' integer NOT NULL," +
-                    "  'word_1' text NOT NULL," +
-                    "  'word_2' text NOT NULL, 'priority' integer NOT NULL DEFAULT '1'," +
+                    "  'id' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
+                    "  'id_list' INTEGER NOT NULL," +
+                    "  'word_1' TEXT NOT NULL," +
+                    "  'word_2' TEXT NOT NULL, 'priority' INTEGER NOT NULL DEFAULT '1'," +
                     "  FOREIGN KEY ('id_list') REFERENCES 'list' ('id') ON DELETE CASCADE" +
                     ");");
 
             statement.executeUpdate("CREATE TABLE 'list' (" +
-                    "  'id' integer NOT NULL PRIMARY KEY AUTOINCREMENT," +
-                    "  'name' text NOT NULL" +
+                    "  'id' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
+                    "  'name' TEXT NOT NULL" +
                     ");");
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
+    }
+
+    public void close() {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
