@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class CardDaoMock implements CardDao {
     /**
-     * Get all Cards by List ID
+     * Mock object of getting all Cards by List ID
      *
      * @param listId ID of List
      * @return a Card List
@@ -32,19 +32,33 @@ public class CardDaoMock implements CardDao {
         return al;
     }
 
+    /**
+     *  Method save for saving a Card
+     * @param card Card for saving
+     * @return true always for testing purposes
+     */
     @Override
     public boolean save(Card card) {
-
         return true;
     }
 
+    /**
+     * Removing Card by its ID
+     * @param cardId ID of card we want to remove
+     * @return true always for testing purposes
+     */
     @Override
     public boolean remove(int cardId) {
         return true;
     }
 
+    /**
+     *  Method returning number of Cards included in one List
+     * @param listId ID of List we want to know number of cards
+     * @return a integer of number of cards
+     */
     @Override
     public int countByCardListId(int listId) {
-        return 5;
+        return 2;
     }
 }
