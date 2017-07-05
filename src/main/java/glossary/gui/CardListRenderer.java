@@ -1,12 +1,9 @@
 package glossary.gui;
 
 import glossary.global.CardList;
-import glossary.global.ListService;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Created by Papi on 4. 7. 2017.

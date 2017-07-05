@@ -5,9 +5,8 @@
  */
 package glossary.gui;
 
+import glossary.engine.dao.CardListDao;
 import glossary.global.*;
-
-import java.util.HashMap;
 
 /**
  *
@@ -17,7 +16,7 @@ public class Temporary {
     
 
     public static void main(String[] args) {
-               Frame frame = new Frame(new ListService() {
+               Frame frame = new Frame(new CardListDao() {
                    @Override
                    public CardList[] getLitOverview() {
                        System.out.println("Fetching cardList");

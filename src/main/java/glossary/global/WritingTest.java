@@ -1,10 +1,12 @@
 package glossary.global;
 
+import glossary.engine.model.Card;
+
 /**
  * Created by Papi on 4. 7. 2017.
  */
 public interface WritingTest {
-    String getNext();
+    Card getNext();
 
     boolean verify(String answer);
 
