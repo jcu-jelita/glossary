@@ -2,42 +2,30 @@ package glossary.engine.dao;
 
 import glossary.engine.model.Card;
 import glossary.engine.model.CardList;
+import glossary.global.exception.DatabaseException;
 
-import java.sql.Connection;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Pavel Máca <maca.pavel@gmail.com> on 04.07.2017.
  */
 public class CardListDaoImpl extends BaseDaoImpl implements CardListDao {
+    private CardDao cardDao;
 
-    public CardListDaoImpl(Connection connection) {
+    public CardListDaoImpl(Connection connection, CardDao cardDao) {
         super(connection);
+        this.cardDao = cardDao;
     }
 
     @Override
     public List<CardList> findAll() {
-        return null;
-    }
 
-    @Override
-    public CardList save(CardList cardList, List<Card> cards) {
-        return null;
-    }
-
-    @Override
-    public boolean remove(int listId) {
-        return false;
-    }
-
-
-    /*
-    @Override
-    public List<CardList> getLitOverview() {
         ArrayList<CardList> list = new ArrayList<>();
 
         try {
-            Statement stmt = database.getConnection().createStatement();
+            Statement stmt = connection.createStatement();
 
             String sql = "SELECT * FROM list ORDER BY id";
             ResultSet rs = stmt.executeQuery(sql);
@@ -47,46 +35,62 @@ public class CardListDaoImpl extends BaseDaoImpl implements CardListDao {
                 list.add(cardList);
             }
             rs.close();
-        } catch (SQLException | DatabaseException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return list;
     }
 
-
-
     @Override
-    public CardList save(CardList cardList) {
-        try {
-            PreparedStatement stmt = database.getConnection().prepareStatement("INSERT INTO list(name) VALUES(?)");
+    public CardList save(CardList cardList, List<Card> cards) {
+        //TODO transaction
+        CardList cardListSaved = saveCardList(cardList);
 
-            stmt.setString(1, cardList.getName());
-            stmt.executeUpdate();
 
-            // TODO zíkat ID listu
-
-            HashMap<Integer, String[]> wordMap = cardList.getWordMap();
-            wordMap.forEach((integer, strings) -> {
-                try {
-                    // todo jiný foreach aby nebylo dvakrát zachytávání
-                    String insert = "INSERT INTO card('word_1', 'word_2') VALUES('" + strings[0] + "', '" + strings[1] + "')";
-                    stmt.executeUpdate(insert);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-
-            });
-        } catch (SQLException | DatabaseException e) {
-            e.printStackTrace();
-            return null;
+        for (Card card : cards) {
+            if (!cardDao.save(card)) {
+                // TODO revert transaction and print error
+            }
         }
 
-        return getLitDetail(cardList.getId());
+        return cardListSaved;
     }
 
     @Override
     public boolean remove(int listId) {
-        return false;
-    }*/
+        try {
+            //TODO update
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM list WHERE id = ?");
+
+            stmt.setInt(1, listId);
+            if (stmt.executeUpdate() > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    private CardList saveCardList(CardList cardList) {
+        try {
+            //TODO update
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO list(name) VALUES(?)");
+
+            stmt.setString(1, cardList.getName());
+            stmt.executeUpdate();
+
+            ResultSet rs = stmt.getGeneratedKeys();
+            cardList.setId(rs.getInt("id"));
+
+            return cardList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
