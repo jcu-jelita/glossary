@@ -33,10 +33,10 @@ public class Frame extends JFrame {
     private final String CARD_RESULTS = "result";
     private JPanel jPanel_cards;
     private CardLayout cardLayout;
-    private DefaultTableModel dm;
+    private DefaultTableModel defaultTableModel_create;
     private JTextField tf_listName;
-    private JTable tableLibrary_create;
     private JTable tableLibraries_menu;
+    private JTable tableLibrary_create;
     private HashMap<Integer, Integer> parser;
 
 
@@ -112,6 +112,10 @@ public class Frame extends JFrame {
         return panel;
     }
 
+    /**
+     *
+     * @return  JTable which contains list of all libraries
+     */
     private JTable createLibrariesTable() {
         DefaultTableModel dm = new DefaultTableModel();
         dm.setDataVector(getDataVector(), new Object[]{"Name", "Run", "Edit", "Delete"});
@@ -152,8 +156,8 @@ public class Frame extends JFrame {
         JLabel s_createList = new JLabel("Create new list", SwingConstants.CENTER);
         JLabel s_listName = new JLabel("List Name:");
         tf_listName = new JTextField();
-        dm = new DefaultTableModel();
-        tableLibrary_create = createLibraryTable(dm);
+        defaultTableModel_create = new DefaultTableModel();
+        tableLibrary_create = initLibraryTable(defaultTableModel_create);
         JScrollPane spCards = new JScrollPane(tableLibrary_create);
 
         JButton bt_addWord = new JButton("Add new word");
@@ -204,18 +208,8 @@ public class Frame extends JFrame {
         panel.add(bt_cancel);
 
         bt_cancel.addActionListener((ActionEvent e) -> {
-            if (dm.getRowCount() > 0 || !tf_listName.getText().equals("")) {
-                Object[] options = {"Delete",
-                        "Cancel"};
-                int n = JOptionPane.showOptionDialog(this,
-                        "You are about to delete all your changes. Do you want to proceed?",
-                        "Delete your changes",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE,
-                        null,
-                        options,
-                        options[1]);
-                if (n == 1) {
+            if (defaultTableModel_create.getRowCount() > 0 || !tf_listName.getText().equals("")) {
+                if (!createDeleteCancelQuestion("You are about to delete all your changes. Do you want to proceed?", "Delete your changes")) {
                     return;
                 }
             }
@@ -223,7 +217,7 @@ public class Frame extends JFrame {
             cardLayout.show(jPanel_cards, CARD_MENU);
         });
         addRow.addActionListener((ActionEvent e) -> {
-            dm.addRow(new Object[]{dm.getRowCount()+1,"", ""});
+            defaultTableModel_create.addRow(new Object[]{defaultTableModel_create.getRowCount()+1,"", ""});
         });
         bt_confirm.addActionListener((ActionEvent e) -> {
             if (tf_listName.getText().equals("")) {
@@ -235,11 +229,11 @@ public class Frame extends JFrame {
             StringBuilder sb = new StringBuilder();
             sb.append("Can not save your list\nMissing full pairs:\n");
             boolean missingPairs = false;
-            if (dm.getRowCount() > 0) {
+            if (defaultTableModel_create.getRowCount() > 0) {
 
-                for (int i = 0; i < dm.getRowCount(); i++) {
-                    String word = (String) dm.getValueAt(i, 1);
-                    String translation = (String) dm.getValueAt(i, 2);
+                for (int i = 0; i < defaultTableModel_create.getRowCount(); i++) {
+                    String word = (String) defaultTableModel_create.getValueAt(i, 1);
+                    String translation = (String) defaultTableModel_create.getValueAt(i, 2);
                     System.out.println(word);
                     System.out.println(translation);
                     if (!word.equals("") && !translation.equals("")) {
@@ -268,12 +262,12 @@ public class Frame extends JFrame {
     }
 
     private void clearPanelCreate() {
-        dm.setRowCount(0);
+        defaultTableModel_create.setRowCount(0);
         tf_listName.setText("");
     }
 
-    private JTable createLibraryTable(DefaultTableModel dm) {
-        dm.setDataVector(new Object[][]{}, new Object[]{"No.","Word", "Translation"});
+    private JTable initLibraryTable(DefaultTableModel dm) {
+        dm.setDataVector(new Object[][]{}, prepareColumns_create());
         JTable table = new JTable(dm){
             public boolean isCellEditable(int row, int column){
                 if (column == 0){
@@ -346,13 +340,54 @@ public class Frame extends JFrame {
     protected void editList(int row) {
         System.out.println(row);
         CardList cardList = (CardList) tableLibraries_menu.getValueAt(row, 0);
-        System.out.println("Edit " + cardList.getId());
+
+        defaultTableModel_create.setDataVector(prepareDataForTable_create(cardList.getId()), prepareColumns_create());
+
+        cardLayout.show(jPanel_cards,CARD_CREATE);
+    }
+
+    private Object[] prepareColumns_create() {
+        return new Object[]{"No.","Word", "Translation"};
+    }
+
+    private Object[][] prepareDataForTable_create(int id) {
+        java.util.List<Card> cards = engine.getCardDao().findAllByCardListId(id);
+        Object[][] data = new Object[cards.size()][3];
+        for (int i = 0; i < cards.size(); i++) {
+            data[i][0] = i+1;
+            data[i][1] = cards.get(i).getWord1();
+            data[i][2] = cards.get(i).getWord2();
+        }
+        return data;
     }
 
     protected void eraseList(int row) {
         System.out.println(row);
         CardList cardList = (CardList) tableLibraries_menu.getValueAt(row, 0);
-        System.out.println("Delete " + cardList.getId());
+        tableLibrary_create = initLibraryTable(new DefaultTableModel());
+        if (!createDeleteCancelQuestion("You are about to delete "+cardList.getName()+"\nDo you want to continue?", "Delete library")) {
+            return;
+        }
+        if (engine.getCardListDao().remove(cardList.getId())){
+            ((DefaultTableModel)tableLibraries_menu.getModel()).removeRow(row);
+        } else {
+            JOptionPane.showMessageDialog(this, "Unable to delete \""+cardList.getName()+"\" library");
+        }
+
+    }
+
+    private boolean createDeleteCancelQuestion(String msg, String title){
+        Object[] options = {"Delete",
+                "Cancel"};
+        int n = JOptionPane.showOptionDialog(this,
+                msg,
+                title,
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[1]);
+        return (n == 0);
     }
 
 

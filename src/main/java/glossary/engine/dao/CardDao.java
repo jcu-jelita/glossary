@@ -18,7 +18,7 @@ public interface CardDao {
 
     /**
      * Save new or existing Card
-     * If Card.id is null, then new Card i created, otherwice update existing Card by id.
+     * If Card.id is null, then new Card is created, otherwise update existing Card by id.
      *
      * @param card Card to save
      * @return NULL on error

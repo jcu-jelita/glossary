@@ -27,18 +27,23 @@ public class ButtonEditor extends DefaultCellEditor {
         button.setOpaque(true);
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                switch (column){
+                switch (column) {
                     case 1:
+                        fireEditingStopped();
                         frame.startTest(row);
                         break;
                     case 2:
+                        fireEditingStopped();
                         frame.editList(row);
                         break;
                     case 3:
+                        fireEditingStopped();
                         frame.eraseList(row);
                         break;
+                    default:
+                        fireEditingStopped();
                 }
-                fireEditingStopped();
+
             }
         });
     }
@@ -50,10 +55,10 @@ public class ButtonEditor extends DefaultCellEditor {
             button.setBackground(table.getSelectionBackground());
         } else {
             button.setForeground(table.getForeground());
-           button.setBackground(UIManager.getColor("Button.background"));
+            button.setBackground(UIManager.getColor("Button.background"));
         }
         try {
-            button.setIcon(new ImageIcon(this.getClass().getResource("/Icon/"+(String)value)));
+            button.setIcon(new ImageIcon(this.getClass().getResource("/Icon/" + (String) value)));
         } catch (Exception ex) {
             System.out.println(ex);
         }
