@@ -17,4 +17,6 @@ public interface CardDao {
     boolean remove(int cardId);
 
     int countByCardListId(int listId);
+
+    List<Card> pickForTest(int wordCount, int cardListId);
 }
