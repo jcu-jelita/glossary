@@ -1,6 +1,8 @@
 package glossary.engine.service;
 
 
+import glossary.global.exception.DatabaseException;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,7 +19,7 @@ public class DatabaseService {
 
     static private String DB_FILE_NAME = "glossary.db";
 
-    public Connection getConnection() {
+    public Connection getConnection() throws DatabaseException {
         if (connection != null) {
             return connection;
         }
@@ -38,15 +40,14 @@ public class DatabaseService {
             if (createDb) {
                 createDatabase();
             }
-
-            System.out.println("Connection to SQLite has been established.");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            throw new DatabaseException("Nelze se připojit k databázi.");
         }
         return connection;
     }
 
-    protected void createDatabase() {
+    private void createDatabase() throws DatabaseException {
         try {
             Statement statement = getConnection().createStatement();
             statement.executeUpdate("CREATE TABLE 'card' (" +
