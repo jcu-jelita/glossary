@@ -63,7 +63,15 @@ public class CardDaoImplTest extends DatabaseTestCase {
     }
 
     public void testRemove() throws Exception {
-        assertTrue(false);
+        CardDaoImpl cardDao = new CardDaoImpl(testConnection);
+
+        assertFalse(cardDao.remove(7));
+
+        // save new Card without CardList.id
+        Card card = new Card("ice", "led");
+        card.setCardListId(5);
+        cardDao.save(card);
+        assertTrue(cardDao.remove(card.getId()));
     }
 
     public void testCountByCardListId() throws Exception {
