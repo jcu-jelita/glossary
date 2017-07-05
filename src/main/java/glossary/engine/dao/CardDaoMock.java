@@ -22,4 +22,9 @@ public class CardDaoMock implements CardDao {
     public boolean remove(int cardId) {
         return false;
     }
+
+    @Override
+    public int countByCardListId(int listId) {
+        return 0;
+    }
 }

@@ -11,17 +11,6 @@ import java.util.List;
 public class CardListDaoMock implements CardListDao {
 
     @Override
-    public Card findByCardListId(int listId) {
-      /*  HashMap<Integer, String[]> words = new HashMap<>();
-        words.put(0, new String[]{"Ice", "Led"});
-        words.put(1, new String[]{"and", "a"});
-        words.put(2, new String[]{"Fire", "ohěň"});
-
-        return new CardList(0, "GoT", words);*/
-        return null;
-    }
-
-    @Override
     public List<Card> findAll() {
         return null;
     }
