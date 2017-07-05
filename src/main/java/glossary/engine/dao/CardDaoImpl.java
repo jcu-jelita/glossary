@@ -1,7 +1,6 @@
 package glossary.engine.dao;
 
 import glossary.engine.model.Card;
-import glossary.engine.model.CardList;
 
 import java.sql.*;
 import java.util.ArrayList;

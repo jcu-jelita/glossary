@@ -4,7 +4,6 @@ import glossary.engine.dao.*;
 import glossary.engine.facade.WritingTestFacade;
 import glossary.engine.facade.WritingTestFacadeImpl;
 import glossary.engine.factory.DatabaseFactory;
-import glossary.global.exception.DatabaseException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -13,12 +12,12 @@ import java.sql.SQLException;
  * Created by Pavel Máca <maca.pavel@gmail.com> on 04.07.2017.
  */
 public class GlossaryEngine {
-    static private String DB_FILE_NAME = "glossary.db";
+    static private final String DB_FILE_NAME = "glossary.db";
 
-    private Connection connection;
+    private final Connection connection;
 
 
-    public GlossaryEngine() throws DatabaseException {
+    public GlossaryEngine() {
         connection = DatabaseFactory.craete(DB_FILE_NAME);
     }
 

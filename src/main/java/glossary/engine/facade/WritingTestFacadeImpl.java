@@ -12,8 +12,8 @@ import java.util.ListIterator;
 public class WritingTestFacadeImpl implements WritingTestFacade {
 
 
-    private List<Card> cards;
-    private ListIterator<Card> iterator;
+    private final List<Card> cards;
+    private final ListIterator<Card> iterator;
 
     private Card current;
 

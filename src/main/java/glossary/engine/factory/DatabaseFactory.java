@@ -1,7 +1,5 @@
 package glossary.engine.factory;
 
-import glossary.global.exception.DatabaseException;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,7 +21,7 @@ public abstract class DatabaseFactory {
      * @return Return NULL if database cannot be opened od created
      */
     public static Connection craete(String fileName) {
-        Connection connection = null;
+        Connection connection;
 
         Path filepath = Paths.get(fileName);
         boolean createDbStructure = true;

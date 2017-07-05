@@ -4,7 +4,6 @@ import glossary.engine.model.Card;
 import glossary.engine.model.CardList;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

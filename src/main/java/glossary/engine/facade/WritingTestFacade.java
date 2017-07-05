@@ -17,7 +17,7 @@ public interface WritingTestFacade {
     /**
      * Check if answer is correct
      *
-     * @param answer
+     * @param answer User answer to compare agains Card translation
      * @return true if word2 match word1
      */
     boolean verify(String answer);

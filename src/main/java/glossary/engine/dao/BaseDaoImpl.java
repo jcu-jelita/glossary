@@ -6,10 +6,10 @@ import java.sql.Connection;
 /**
  * Created by Pavel Máca <maca.pavel@gmail.com> on 05.07.2017.
  */
-public abstract class BaseDaoImpl {
-    protected   Connection connection;
+abstract class BaseDaoImpl {
+    final Connection connection;
 
-    public BaseDaoImpl(Connection connection) {
+    BaseDaoImpl(Connection connection) {
         this.connection = connection;
     }
 }

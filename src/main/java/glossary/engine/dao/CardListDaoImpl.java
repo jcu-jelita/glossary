@@ -2,7 +2,6 @@ package glossary.engine.dao;
 
 import glossary.engine.model.Card;
 import glossary.engine.model.CardList;
-import glossary.global.exception.DatabaseException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ import java.util.List;
  * Created by Pavel Máca <maca.pavel@gmail.com> on 04.07.2017.
  */
 public class CardListDaoImpl extends BaseDaoImpl implements CardListDao {
-    private CardDao cardDao;
+    private final CardDao cardDao;
 
     public CardListDaoImpl(Connection connection, CardDao cardDao) {
         super(connection);
@@ -66,11 +65,7 @@ public class CardListDaoImpl extends BaseDaoImpl implements CardListDao {
             PreparedStatement stmt = connection.prepareStatement("DELETE FROM list WHERE id = ?");
 
             stmt.setInt(1, listId);
-            if (stmt.executeUpdate() > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
