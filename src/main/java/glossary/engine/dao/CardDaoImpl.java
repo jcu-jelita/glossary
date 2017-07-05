@@ -40,13 +40,26 @@ public class CardDaoImpl extends BaseDaoImpl implements CardDao {
     public Card save(Card card) {
 
         try {
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO card(id_list, word_1, word_2) VALUES(?, ?, ?)");
+            if (card.getCardListId() == 0 || card.getWord1().isEmpty() || card.getWord2().isEmpty()) {
+                return null;
+            }
+
+            PreparedStatement stmt;
+            if (card.getId() == 0) {
+                stmt = connection.prepareStatement("INSERT INTO card(id_list, word_1, word_2) VALUES(?, ?, ?)");
+            } else {
+                stmt = connection.prepareStatement("UPDATE card SET id_list = ?, word_1 = ?, word_2 = ? WHERE id = ?");
+                stmt.setInt(4, card.getId());
+            }
             stmt.setInt(1, card.getCardListId());
             stmt.setString(2, card.getWord1());
             stmt.setString(3, card.getWord2());
             if (stmt.executeUpdate() > 0) {
-                ResultSet rs = stmt.getGeneratedKeys();
-                card.setId(rs.getInt(1));
+
+                if (card.getId() == 0) {
+                    ResultSet rs = stmt.getGeneratedKeys();
+                    card.setId(rs.getInt(1));
+                }
 
                 return card;
             }

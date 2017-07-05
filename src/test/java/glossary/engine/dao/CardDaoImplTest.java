@@ -27,7 +27,9 @@ public class CardDaoImplTest extends DatabaseTestCase {
         assertEquals(1, cardDao.findAllByCardListId(2).size()); // list 2
 
         // add second card to list 1
-        cardDao.save(list1);
+        Card list3 = new Card("fire", "oheň");
+        list3.setCardListId(1);
+        cardDao.save(list3);
         assertEquals(2, cardDao.findAllByCardListId(1).size()); // list 1
         assertEquals(1, cardDao.findAllByCardListId(2).size()); // list 2
     }

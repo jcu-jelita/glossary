@@ -96,14 +96,22 @@ public class CardListDaoImpl extends BaseDaoImpl implements CardListDao {
 
     private CardList saveCardList(CardList cardList) {
         try {
-            //TODO update
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO list(name) VALUES(?)");
+
+            PreparedStatement stmt;
+            if (cardList.getId() > 0) {
+                stmt = connection.prepareStatement("UPDATE list SET name = ? WHERE id = ?");
+                stmt.setInt(2, cardList.getId());
+            } else {
+                stmt = connection.prepareStatement("INSERT INTO list(name) VALUES(?)");
+            }
 
             stmt.setString(1, cardList.getName());
             stmt.executeUpdate();
 
-            ResultSet rs = stmt.getGeneratedKeys();
-            cardList.setId(rs.getInt(1));
+            if (cardList.getId() == 0) {
+                ResultSet rs = stmt.getGeneratedKeys();
+                cardList.setId(rs.getInt(1));
+            }
 
             return cardList;
         } catch (SQLException e) {
