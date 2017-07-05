@@ -32,4 +32,8 @@ public class CardList {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String toString(){
+        return name;
+    }
 }

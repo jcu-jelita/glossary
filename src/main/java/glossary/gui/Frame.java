@@ -12,6 +12,7 @@ import glossary.engine.model.CardList;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -36,6 +37,8 @@ public class Frame extends JFrame {
     private JTextField tf_listName;
     private JTable tableLibrary_create;
     private JTable tableLibraries_menu;
+    private HashMap<Integer, Integer> parser;
+
 
     public Frame(GlossaryEngine engine) {
         this.engine = engine;
@@ -44,6 +47,7 @@ public class Frame extends JFrame {
         setLocationRelativeTo(null);
         getContentPane().setBackground(Color.yellow);
         setPanels();
+
     }
 
     private void setPanels() {
@@ -234,18 +238,15 @@ public class Frame extends JFrame {
             if (dm.getRowCount() > 0) {
 
                 for (int i = 0; i < dm.getRowCount(); i++) {
-                    String word = (String) dm.getValueAt(i, 0);
-                    String translation = (String) dm.getValueAt(i, 1);
+                    String word = (String) dm.getValueAt(i, 1);
+                    String translation = (String) dm.getValueAt(i, 2);
                     System.out.println(word);
                     System.out.println(translation);
                     if (!word.equals("") && !translation.equals("")) {
-                        System.out.println("Neprázdný řádek");
                         Card card = new Card(word, translation);
                         cards.add(card);
                     } else {
-                        System.out.println("Něco prázdného");
                         if (!(word.equals("")&&translation.equals(""))){
-                            System.out.println("Prázdný jen jeden");
                             missingPairs = true;
                             sb.append("Row no. ").append(i+1).append("\n");
                         }
@@ -256,8 +257,11 @@ public class Frame extends JFrame {
             if(missingPairs){
                 JOptionPane.showMessageDialog(this, sb.toString());
             } else {
-               // engine.getCardListDao().save(cardList, cards);
+                CardList tmp =  engine.getCardListDao().save(cardList, cards);
+                DefaultTableModel dem = (DefaultTableModel) tableLibraries_menu.getModel();
+                dem.addRow(new Object[]{tmp, "run.png", "edit.png","delete.png"});
                 clearPanelCreate();
+                cardLayout.show(jPanel_cards, CARD_MENU);
             }
         });
         return panel;
@@ -271,14 +275,14 @@ public class Frame extends JFrame {
     private JTable createLibraryTable(DefaultTableModel dm) {
         dm.setDataVector(new Object[][]{}, new Object[]{"No.","Word", "Translation"});
         JTable table = new JTable(dm){
-                public boolean isCellEditable(int row, int column){
-                    if (column == 0){
-                        return false;
-                    } else {
-                        return getModel().isCellEditable(convertRowIndexToModel(row),
-                                convertColumnIndexToModel(column));
-                    }
+            public boolean isCellEditable(int row, int column){
+                if (column == 0){
+                    return false;
+                } else {
+                    return getModel().isCellEditable(convertRowIndexToModel(row),
+                            convertColumnIndexToModel(column));
                 }
+            }
         };
         table.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
         table.getColumnModel().getColumn(0).setMaxWidth(40);
@@ -335,20 +339,20 @@ public class Frame extends JFrame {
 
     protected void startTest(int row) {
         System.out.println(row);
-       String listName = (String) tableLibraries_menu.getValueAt(row, 0);
-        System.out.println("Start test of " + listName);
+        CardList cardList = (CardList) tableLibraries_menu.getValueAt(row, 0);
+        System.out.println("Start test of " + cardList.getId());
     }
 
     protected void editList(int row) {
         System.out.println(row);
-        String listName = (String) tableLibraries_menu.getValueAt(row, 0);
-        System.out.println("Edit " + listName);
+        CardList cardList = (CardList) tableLibraries_menu.getValueAt(row, 0);
+        System.out.println("Edit " + cardList.getId());
     }
 
     protected void eraseList(int row) {
         System.out.println(row);
-        String listName = (String) tableLibraries_menu.getValueAt(row, 0);
-        System.out.println("Delete " + listName);
+        CardList cardList = (CardList) tableLibraries_menu.getValueAt(row, 0);
+        System.out.println("Delete " + cardList.getId());
     }
 
 
@@ -357,7 +361,8 @@ public class Frame extends JFrame {
         java.util.List<CardList> cards = engine.getCardListDao().findAll();
         Object[][] vector = new Object[cards.size()][columnCount];
         for (int i = 0; i < cards.size(); i++) {
-            vector[i][0] = cards.get(i).getName();
+            vector[i][0] = cards.get(i);
+            System.out.println(cards.get(i));
             vector[i][1] = "run.png";
             vector[i][2] = "edit.png";
             vector[i][3] = "delete.png";

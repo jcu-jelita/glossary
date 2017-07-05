@@ -1,4 +1,13 @@
-VÝUKA SLOVÍČEK
+EN: *LEARNING WORD IN DIFFEREND LANGUAGES*
+
+1. 
+    1.1. 
+      1. 
+      2. 
+   1.2. 
+   1.3. 
+
+CZ: *VÝUKA SLOVÍČEK*
 
 1. Otevře se úvodní okno s vytvořenými knihovnami s možností (1.1) spuštění, (1.2) editací knihovny a smazání celé knihovny. Pod výčtem knihoven se nachází tlačítko s možností přidání nové knihovny (1.3). 
 
