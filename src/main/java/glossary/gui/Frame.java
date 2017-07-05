@@ -112,7 +112,16 @@ public class Frame extends JFrame {
         DefaultTableModel dm = new DefaultTableModel();
         dm.setDataVector(getDataVector(), new Object[]{"Name", "Run", "Edit", "Delete"});
 
-        JTable table = new JTable(dm);
+        JTable table = new JTable(dm){
+            public boolean isCellEditable(int row, int column){
+                if (column == 0){
+                    return false;
+                } else {
+                    return getModel().isCellEditable(convertRowIndexToModel(row),
+                            convertColumnIndexToModel(column));
+                }
+            }
+        };
         table.setShowGrid(false);
         table.setFont(new Font("Arial", Font.BOLD, 40));
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
@@ -208,7 +217,7 @@ public class Frame extends JFrame {
             cardLayout.show(jPanel_cards, CARD_MENU);
         });
         addRow.addActionListener((ActionEvent e) -> {
-            dm.addRow(new Object[]{"", ""});
+            dm.addRow(new Object[]{dm.getRowCount()+1,"", ""});
         });
         bt_confirm.addActionListener((ActionEvent e) -> {
             if (tf_listName.getText().equals("")) {
@@ -258,9 +267,19 @@ public class Frame extends JFrame {
     }
 
     private JTable createLibraryTable(DefaultTableModel dm) {
-        dm.setDataVector(new Object[][]{}, new Object[]{"Word", "Translation"});
-        JTable table = new JTable(dm);
+        dm.setDataVector(new Object[][]{}, new Object[]{"No.","Word", "Translation"});
+        JTable table = new JTable(dm){
+                public boolean isCellEditable(int row, int column){
+                    if (column == 0){
+                        return false;
+                    } else {
+                        return getModel().isCellEditable(convertRowIndexToModel(row),
+                                convertColumnIndexToModel(column));
+                    }
+                }
+        };
         table.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
+        table.getColumnModel().getColumn(0).setMaxWidth(40);
         return table;
 
 
