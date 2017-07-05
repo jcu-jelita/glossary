@@ -35,7 +35,7 @@ public class Frame extends JFrame {
     private CardLayout cardLayout;
     private DefaultTableModel dm;
     private JTextField tf_listName;
-
+    private JTable table;
 
     public Frame(GlossaryEngine engine) {
         this.engine = engine;
@@ -138,7 +138,7 @@ public class Frame extends JFrame {
         JLabel s_listName = new JLabel("List Name:");
         tf_listName = new JTextField();
         dm = new DefaultTableModel();
-        JTable table = createLibraryTable(dm);
+        table = createLibraryTable(dm);
         JScrollPane spCards = new JScrollPane(table);
 
         JButton bt_addWord = new JButton("Add new word");
@@ -217,21 +217,37 @@ public class Frame extends JFrame {
             }
             CardList cardList = new CardList(tf_listName.getText());
             ArrayList<Card> cards = new ArrayList<>();
+            StringBuilder sb = new StringBuilder();
+            sb.append("Can not save your list\nMissing full pairs:\n");
+            boolean missingPairs = false;
             if (dm.getRowCount() > 0) {
 
                 for (int i = 0; i < dm.getRowCount(); i++) {
                     String word = (String) dm.getValueAt(i, 0);
-                    String transaltion = (String) dm.getValueAt(i, 1);
-                    if (!word.equals("") && !transaltion.equals("")) {
-                        Card card = new Card(word, transaltion);
+                    String translation = (String) dm.getValueAt(i, 1);
+                    System.out.println(word);
+                    System.out.println(translation);
+                    if (!word.equals("") && !translation.equals("")) {
+                        System.out.println("Neprázdný řádek");
+                        Card card = new Card(word, translation);
                         cards.add(card);
                     } else {
+                        System.out.println("Něco prázdného");
+                        if (!(word.equals("")&&translation.equals(""))){
+                            System.out.println("Prázdný jen jeden");
+                            missingPairs = true;
+                            sb.append("Row no. ").append(i+1).append("\n");
+                        }
 
                     }
                 }
             }
-            engine.getCardListDao().save(cardList, cards);
-            clearPanelCreate();
+            if(missingPairs){
+                JOptionPane.showMessageDialog(this, sb.toString());
+            } else {
+               // engine.getCardListDao().save(cardList, cards);
+                clearPanelCreate();
+            }
         });
         return panel;
     }
@@ -244,6 +260,7 @@ public class Frame extends JFrame {
     private JTable createLibraryTable(DefaultTableModel dm) {
         dm.setDataVector(new Object[][]{}, new Object[]{"Word", "Translation"});
         JTable table = new JTable(dm);
+        table.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
         return table;
 
 
