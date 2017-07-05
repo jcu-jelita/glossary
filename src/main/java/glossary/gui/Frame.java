@@ -5,8 +5,8 @@
  */
 package glossary.gui;
 
+import glossary.engine.dao.CardListDao;
 import glossary.global.CardList;
-import glossary.global.ListService;
 import glossary.global.TestService;
 
 import java.awt.CardLayout;
@@ -22,7 +22,7 @@ import javax.swing.*;
  */
 public class Frame extends JFrame {
 
-    private final ListService listService;
+    private final CardListDao cardListDao;
     private final TestService testService;
 
     private final int FRAME_WIDTH = 800;
@@ -36,9 +36,9 @@ public class Frame extends JFrame {
     private JPanel jPanel_cards;
     private CardLayout cardLayout;
 
-    public Frame(ListService listService, TestService testService) {
+    public Frame(CardListDao cardListDao, TestService testService) {
         this.testService = testService;
-        this.listService = listService;
+        this.cardListDao = cardListDao;
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -66,7 +66,7 @@ public class Frame extends JFrame {
         JLabel s_list = new JLabel("Custom lists:");
         JButton bt_addList = new JButton("Add list");
         JButton bt_exit = new JButton("Exit");
-        JList<CardList> cardNamesList = new JList<>(listService.getLitOverview());
+        JList<CardList> cardNamesList = new JList<>(cardListDao.getLitOverview());
         cardNamesList.setCellRenderer(new CardListRenderer(this));
 
         JScrollPane sc_List = new JScrollPane(cardNamesList);
@@ -115,7 +115,7 @@ public class Frame extends JFrame {
         Dimension dim;
         Rectangle rec;
         JLabel s_createList = new JLabel("Create new list", SwingConstants.CENTER);
-        JLabel s_listName = new JLabel("List Name:");
+        JLabel s_listName = new JLabel("CardList Name:");
         JTextField tf_listName = new JTextField();
         JTable t_Cards = new JTable();
         JScrollPane sp_Cards = new JScrollPane(t_Cards);
