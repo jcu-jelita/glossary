@@ -5,14 +5,14 @@ package glossary.engine.model;
  */
 public class Card {
     private int id;
-    private int cardList;
+    private int cardListId;
 
     private String word1;
     private String word2;
 
-    public Card(int id, int cardList, String word1, String word2) {
+    public Card(int id, int cardListId, String word1, String word2) {
         this.id = id;
-        this.cardList = 0;
+        this.cardListId = cardListId;
         this.word1 = word1;
         this.word2 = word2;
     }
@@ -21,8 +21,8 @@ public class Card {
         return id;
     }
 
-    public int getCardList() {
-        return 0;
+    public int getCardListId() {
+        return cardListId;
     }
 
     public String getWord1() {
