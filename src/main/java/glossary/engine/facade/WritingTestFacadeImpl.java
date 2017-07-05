@@ -70,7 +70,7 @@ public class WritingTestFacadeImpl implements WritingTestFacade {
         double percent = cards.size() / correctAnswers * 100;
         if (percent > 90) {
             return 1;
-        } else if (percent > 75) {
+        } else if (percent > 80) {
             return 2;
         } else if (percent > 50) {
             return 3;
