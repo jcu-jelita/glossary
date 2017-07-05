@@ -11,7 +11,6 @@
    1.2. Package editation: Ability to add or delete words into package.
    
    1.3. Adding a new package: Creating a package with optional name (for example Weather)
-
 _____________________________________________________________________________
 
 **CZ:** *VÝUKA SLOVÍČEK*
