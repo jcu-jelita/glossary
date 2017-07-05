@@ -5,25 +5,23 @@
  */
 package glossary.gui;
 
-import glossary.engine.dao.CardListDao;
-import glossary.global.CardList;
-import glossary.global.TestService;
+import glossary.engine.GlossaryEngine;
+import glossary.engine.model.Card;
+import glossary.engine.model.CardList;
 
-import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.*;
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * @author Papi
  */
 public class Frame extends JFrame {
 
-    private final CardListDao cardListDao;
-    private final TestService testService;
+    private final GlossaryEngine engine;
 
     private final int FRAME_WIDTH = 800;
     private final int FRAME_HEIGHT = 600;
@@ -36,9 +34,8 @@ public class Frame extends JFrame {
     private JPanel jPanel_cards;
     private CardLayout cardLayout;
 
-    public Frame(CardListDao cardListDao, TestService testService) {
-        this.testService = testService;
-        this.cardListDao = cardListDao;
+    public Frame(GlossaryEngine engine) {
+        this.engine = engine;
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -66,10 +63,8 @@ public class Frame extends JFrame {
         JLabel s_list = new JLabel("Custom lists:");
         JButton bt_addList = new JButton("Add list");
         JButton bt_exit = new JButton("Exit");
-        JList<CardList> cardNamesList = new JList<>(cardListDao.getLitOverview());
-        cardNamesList.setCellRenderer(new CardListRenderer(this));
+        JScrollPane sc_List = new JScrollPane(setLibraryTable());
 
-        JScrollPane sc_List = new JScrollPane(cardNamesList);
 
         Dimension dim;
         Rectangle rec;
@@ -87,6 +82,7 @@ public class Frame extends JFrame {
         dim = new Dimension(600, 350);
         rec = new Rectangle(100, 100, dim.width, dim.height);
         sc_List.setBounds(rec);
+
 
         dim = new Dimension(200, 50);
         rec = new Rectangle(100, 470, dim.width, dim.height);
@@ -109,13 +105,35 @@ public class Frame extends JFrame {
         return panel;
     }
 
+    private JTable setLibraryTable() {
+        DefaultTableModel dm = new DefaultTableModel();
+        dm.setDataVector(getDataVector(), new Object[]{"Name", "Run", "Edit", "Delete"});
+
+        JTable table = new JTable(dm);
+        table.setShowGrid(false);
+        table.setFont(new Font("Arial", Font.BOLD, 40));
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(JLabel.CENTER);
+        table.getColumnModel().getColumn(0).setCellRenderer(renderer);
+        table.getColumnModel().getColumn(0).setMinWidth(375);
+        table.getColumnModel().getColumn(1).setPreferredWidth(75);
+        table.getColumnModel().getColumn(2).setPreferredWidth(75);
+        table.getColumnModel().getColumn(3).setPreferredWidth(75);
+        table.setRowHeight(75);
+        table.getColumn("Run").setCellRenderer(new ButtonRenderer());
+        table.getColumn("Run").setCellEditor(new ButtonEditor(new JCheckBox(), this));
+        table.getColumn("Edit").setCellRenderer(new ButtonRenderer());
+        table.getColumn("Delete").setCellRenderer(new ButtonRenderer());
+        return table;
+    }
+
     private JPanel createPanelCreate() {
         JPanel panel = new JPanel(null);
 
         Dimension dim;
         Rectangle rec;
         JLabel s_createList = new JLabel("Create new list", SwingConstants.CENTER);
-        JLabel s_listName = new JLabel("CardList Name:");
+        JLabel s_listName = new JLabel("List Name:");
         JTextField tf_listName = new JTextField();
         JTable t_Cards = new JTable();
         JScrollPane sp_Cards = new JScrollPane(t_Cards);
@@ -159,7 +177,6 @@ public class Frame extends JFrame {
 
         bt_cancel.addActionListener((ActionEvent e) -> cardLayout.show(jPanel_cards, CARD_MENU));
 
-
         return panel;
     }
 
@@ -170,9 +187,9 @@ public class Frame extends JFrame {
     }
 
     private JPanel createPanelChooser() {
-        JPanel panel = new JPanel(null);
-        panel.setBackground(Color.black);
-        return panel;
+        JPanel frame = new JPanel(null);
+        frame.setBackground(Color.black);
+        return frame;
     }
 
     private JPanel createPanelWriting() {
@@ -216,5 +233,20 @@ public class Frame extends JFrame {
     }
 
     protected void eraseList() {
+    }
+
+    public Object[][] getDataVector() {
+        int columnCount = 4;
+         java.util.List<CardList> cards = engine.getCardListDao().findAll();
+        Object[][] vector = new Object[cards.size()][columnCount];
+        for (int i = 0; i<cards.size(); i++){
+            vector[i][0] = cards.get(i).getName();
+            vector[i][1] = "run.png";
+            vector[i][2] = "edit.png";
+            vector[i][3] = "delete.png";
+        }
+
+        return vector;
+
     }
 }

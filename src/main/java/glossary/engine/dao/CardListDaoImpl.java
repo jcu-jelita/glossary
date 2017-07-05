@@ -16,7 +16,7 @@ public class CardListDaoImpl extends BaseDaoImpl implements CardListDao {
     }
 
     @Override
-    public List<Card> findAll() {
+    public List<CardList> findAll() {
         return null;
     }
 

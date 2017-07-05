@@ -11,7 +11,7 @@ import java.util.List;
 public class CardListDaoMock implements CardListDao {
 
     @Override
-    public List<Card> findAll() {
+    public List<CardList> findAll() {
         return null;
     }
 

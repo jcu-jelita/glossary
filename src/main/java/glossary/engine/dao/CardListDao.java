@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface CardListDao {
 
-    List<Card> findAll();
+    List<CardList> findAll();
 
     CardList save(CardList cardList, List<Card> cards);
 
