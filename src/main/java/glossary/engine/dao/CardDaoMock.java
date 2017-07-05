@@ -11,7 +11,8 @@ import java.util.List;
  */
 public class CardDaoMock implements CardDao {
     /**
-     *  Get all Cards by List ID
+     * Get all Cards by List ID
+     *
      * @param listId ID of List
      * @return a Card List
      */
@@ -19,10 +20,10 @@ public class CardDaoMock implements CardDao {
     public List<Card> findAllByCardListId(int listId) {
         List<Card> al = new ArrayList<>();
 
-        Card card1 = new Card(1,2,"Hello", "Ahoj");
-        Card card2 = new Card(2,1,"Car", "Auto");
-        Card card3 = new Card(3,2,"Phone", "Telefon");
-        Card card4 = new Card(4,1,"Cell", "Buňka");
+        Card card1 = new Card(1, 2, "Hello", "Ahoj");
+        Card card2 = new Card(2, 1, "Car", "Auto");
+        Card card3 = new Card(3, 2, "Phone", "Telefon");
+        Card card4 = new Card(4, 1, "Cell", "Buňka");
         al.add(card1);
         al.add(card2);
         al.add(card3);
@@ -45,10 +46,5 @@ public class CardDaoMock implements CardDao {
     @Override
     public int countByCardListId(int listId) {
         return 5;
-    }
-
-    @Override
-    public int countByCardListId(int listId) {
-        return 0;
     }
 }

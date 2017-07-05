@@ -3,6 +3,8 @@ package glossary.engine.dao;
 import glossary.engine.model.Card;
 import glossary.engine.model.CardList;
 
+import java.nio.file.attribute.AclEntry;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,7 +14,20 @@ public class CardListDaoMock implements CardListDao {
 
     @Override
     public List<CardList> findAll() {
-        return null;
+        List<CardList> list = new ArrayList<>();
+        CardList cl1 = new CardList(0,"Trasporation");
+        CardList cl2 = new CardList(1,"Jobs");
+        CardList cl3 = new CardList(2,"School");
+        CardList cl4 = new CardList(3,"Weather");
+        CardList cl5 = new CardList(4,"Family");
+        CardList cl6 = new CardList(5,"Fruit");
+        list.add(cl1);
+        list.add(cl2);
+        list.add(cl3);
+        list.add(cl4);
+        list.add(cl5);
+        list.add(cl6);
+        return list;
     }
 
     @Override
