@@ -26,5 +26,7 @@ public class Glossary {
         engine.getListService().save(cardList);*/
 
         //Gui gui = new Gui(engine.getListService(), engine.getTestService());
+
+        engine.close();
     }
 }
