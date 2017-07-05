@@ -41,6 +41,10 @@ public class CardListDaoImpl extends BaseDaoImpl implements CardListDao {
     @Override
     public CardList save(CardList cardList, List<Card> cards) {
         try {
+            if (cardList.getName().isEmpty() || cards == null) {
+                return null;
+            }
+
             // Start transaction
             connection.setAutoCommit(false);
 
