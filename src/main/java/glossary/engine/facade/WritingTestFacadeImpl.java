@@ -12,13 +12,13 @@ import java.util.ListIterator;
 public class WritingTestFacadeImpl implements WritingTestFacade {
 
 
-    List<Card> cards;
-    ListIterator<Card> iterator;
+    private List<Card> cards;
+    private ListIterator<Card> iterator;
 
-    Card current;
+    private Card current;
 
-    int correctAnswers = 0;
-    int incorrectAnswers = 0;
+    private int correctAnswers = 0;
+    private int incorrectAnswers = 0;
 
     public WritingTestFacadeImpl(int wordCount, int cardListId, CardDao cardDao) {
         cards = cardDao.pickForTest(wordCount, cardListId);
