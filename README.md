@@ -1,16 +1,20 @@
-EN: *LEARNING WORD IN DIFFERENT LANGUAGES*
+**EN:** *VOCABULARY LEARNING*
 
-1.
-    1.1. 
+1. The main window is opened with made packages with possibility of (1.1) running, (1.2) editing the package or deleting the whole package. Below list of available packages is button with possibility to add new package (1.3).
+
+    1.1. Running: Afrer pressing the button "Run" is opened a new window with chance to set an amount of words for self-testing.
+         After that user got two possibilities available. Run: (i)- exercising or he will choose choise (ii)- run the test).
     
-      1. 
+      1. Exercising: A new window with a word is displayed (in whatever language). User will think of the answer and afterwards he press the button show. A correct answer is than displayed. In the next step user decides, wether was the was easy or hard. He will press the button with his decision and for that word is assigned a value which will involve next generating of words from specific list.
       2. Run the test: A window appear with glossary (in various languages). User will think about his answer and afterwards he will write it below to the blank window. After pressing the button 'check' will user receive an information, if he wrote the translation correctly or not. After that he press the button 'continue'. A new word will display and all the steps are repeated with different word.
       
    1.2. Package editation: Ability to add or delete words into package.
    
    1.3. Adding a new package: Creating a package with optional name (for example Weather)
 
-CZ: *VÝUKA SLOVÍČEK*
+![alternativní xs](file:///C:/Users/LeM/Desktop/EN.JPG)
+
+**CZ:** *VÝUKA SLOVÍČEK*
 
 1. Otevře se úvodní okno s vytvořenými knihovnami s možností (1.1) spuštění, (1.2) editací knihovny a smazání celé knihovny. Pod výčtem knihoven se nachází tlačítko s možností přidání nové knihovny (1.3). 
 
@@ -25,3 +29,4 @@ CZ: *VÝUKA SLOVÍČEK*
 
    1.3. Přidání nové knihovny: tvorba knihovny s volitelným názvem (např. Weather). 
 
+![alternativní xs](file:///C:/Users/LeM/Desktop/CZ.JPG)
