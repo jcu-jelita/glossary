@@ -25,7 +25,7 @@ public class GlossaryEngine {
 
 
     public GlossaryEngine() throws DatabaseException {
-        createDatabaseConnection();
+       // createDatabaseConnection();
     }
 
     public CardListDao getCardListDao() {

@@ -11,10 +11,11 @@ import glossary.engine.model.CardList;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.*;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  * @author Papi
@@ -22,7 +23,6 @@ import javax.swing.table.DefaultTableModel;
 public class Frame extends JFrame {
 
     private final GlossaryEngine engine;
-
     private final int FRAME_WIDTH = 800;
     private final int FRAME_HEIGHT = 600;
     private final String CARD_MENU = "menu";
@@ -33,6 +33,9 @@ public class Frame extends JFrame {
     private final String CARD_RESULTS = "result";
     private JPanel jPanel_cards;
     private CardLayout cardLayout;
+    private DefaultTableModel dm;
+    private JTextField tf_listName;
+
 
     public Frame(GlossaryEngine engine) {
         this.engine = engine;
@@ -63,7 +66,7 @@ public class Frame extends JFrame {
         JLabel s_list = new JLabel("Custom lists:");
         JButton bt_addList = new JButton("Add list");
         JButton bt_exit = new JButton("Exit");
-        JScrollPane sc_List = new JScrollPane(setLibraryTable());
+        JScrollPane sc_List = new JScrollPane(createLibrariesTable());
 
 
         Dimension dim;
@@ -105,7 +108,7 @@ public class Frame extends JFrame {
         return panel;
     }
 
-    private JTable setLibraryTable() {
+    private JTable createLibrariesTable() {
         DefaultTableModel dm = new DefaultTableModel();
         dm.setDataVector(getDataVector(), new Object[]{"Name", "Run", "Edit", "Delete"});
 
@@ -129,16 +132,20 @@ public class Frame extends JFrame {
 
     private JPanel createPanelCreate() {
         JPanel panel = new JPanel(null);
-
         Dimension dim;
         Rectangle rec;
         JLabel s_createList = new JLabel("Create new list", SwingConstants.CENTER);
         JLabel s_listName = new JLabel("List Name:");
-        JTextField tf_listName = new JTextField();
-        JTable t_Cards = new JTable();
-        JScrollPane sp_Cards = new JScrollPane(t_Cards);
+        tf_listName = new JTextField();
+        dm = new DefaultTableModel();
+        JTable table = createLibraryTable(dm);
+        JScrollPane spCards = new JScrollPane(table);
+
+        JButton bt_addWord = new JButton("Add new word");
+        spCards.add(bt_addWord);
         JButton bt_confirm = new JButton("Confirm");
         JButton bt_cancel = new JButton("Cancel");
+
 
         dim = new Dimension(600, 50);
         rec = new Rectangle(100, 0, dim.width, dim.height);
@@ -155,9 +162,14 @@ public class Frame extends JFrame {
         rec = new Rectangle(300, 70, dim.width, dim.height);
         tf_listName.setBounds(rec);
 
-        dim = new Dimension(600, 350);
+        dim = new Dimension(600, 320);
         rec = new Rectangle(100, 100, dim.width, dim.height);
-        sp_Cards.setBounds(rec);
+        spCards.setBounds(rec);
+
+        JButton addRow = new JButton("Add new row");
+        dim = new Dimension(600, 30);
+        rec = new Rectangle(100, 420, dim.width, dim.height);
+        addRow.setBounds(rec);
 
         dim = new Dimension(200, 50);
         rec = new Rectangle(100, 470, dim.width, dim.height);
@@ -171,13 +183,70 @@ public class Frame extends JFrame {
         panel.add(s_createList);
         panel.add(s_listName);
         panel.add(tf_listName);
-        panel.add(sp_Cards);
+        panel.add(spCards);
+        panel.add(addRow);
         panel.add(bt_confirm);
         panel.add(bt_cancel);
 
-        bt_cancel.addActionListener((ActionEvent e) -> cardLayout.show(jPanel_cards, CARD_MENU));
+        bt_cancel.addActionListener((ActionEvent e) -> {
+            if (dm.getRowCount() > 0 || tf_listName.getText().equals("")) {
+                Object[] options = {"Delete",
+                        "Cancel"};
+                int n = JOptionPane.showOptionDialog(this,
+                        "You are about to delete all your changes. Do you want to proceed?",
+                        "Delete your changes",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        options,
+                        options[1]);
+                if (n == 1) {
+                    return;
+                }
+            }
+            clearPanelCreate();
+            cardLayout.show(jPanel_cards, CARD_MENU);
+        });
+        addRow.addActionListener((ActionEvent e) -> {
+            dm.addRow(new Object[]{"", ""});
+        });
+        bt_confirm.addActionListener((ActionEvent e) -> {
+            if (tf_listName.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Library name is empty");
+                return;
+            }
+            CardList cardList = new CardList(tf_listName.getText());
+            ArrayList<Card> cards = new ArrayList<>();
+            if (dm.getRowCount() > 0) {
 
+                for (int i = 0; i < dm.getRowCount(); i++) {
+                    String word = (String) dm.getValueAt(i, 0);
+                    String transaltion = (String) dm.getValueAt(i, 1);
+                    if (!word.equals("") && !transaltion.equals("")) {
+                        Card card = new Card(word, transaltion);
+                        cards.add(card);
+                    } else {
+
+                    }
+                }
+            }
+            engine.getCardListDao().save(cardList, cards);
+            clearPanelCreate();
+        });
         return panel;
+    }
+
+    private void clearPanelCreate() {
+        dm.setRowCount(0);
+        tf_listName.setText("");
+    }
+
+    private JTable createLibraryTable(DefaultTableModel dm) {
+        dm.setDataVector(new Object[][]{}, new Object[]{"Word", "Translation"});
+        JTable table = new JTable(dm);
+        return table;
+
+
     }
 
     private JPanel createPanelPractising() {
@@ -237,9 +306,9 @@ public class Frame extends JFrame {
 
     public Object[][] getDataVector() {
         int columnCount = 4;
-         java.util.List<CardList> cards = engine.getCardListDao().findAll();
+        java.util.List<CardList> cards = engine.getCardListDao().findAll();
         Object[][] vector = new Object[cards.size()][columnCount];
-        for (int i = 0; i<cards.size(); i++){
+        for (int i = 0; i < cards.size(); i++) {
             vector[i][0] = cards.get(i).getName();
             vector[i][1] = "run.png";
             vector[i][2] = "edit.png";

@@ -13,6 +13,10 @@ public class CardList {
         this.name = name;
     }
 
+    public CardList(String name){
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }
