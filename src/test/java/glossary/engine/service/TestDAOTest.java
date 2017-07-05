@@ -18,22 +18,22 @@ public class TestDAOTest extends TestCase {
     }
 
     public void testGetRandomWords() throws Exception {
-        TestDAO ... = new TestDAO();
+        TestDAO testDAO  = new TestDAO();
 
-        assertEquals(testGetRandomWords(););
+        //assertEquals(10, testDAO.getRandomWords(-1));
     }
 
     public void testCreateWritingTest() throws Exception {
-        TestDAO ... = new TestDAO();
+        TestDAO testDAO = new TestDAO();
 
-        assertEquals(testCreateWritingTest(););
+        //assertEquals(10, testDAO.(-1));
 
     }
 
     public void testCretePracticeTest() throws Exception {
-        TestDAO ... = new TestDAO();
+        TestDAO testDAO = new TestDAO();
 
-        assertEquals(testCretePracticeTest(););
+       // assertEquals(testCretePracticeTest(););
     }
 
 }
