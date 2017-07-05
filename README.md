@@ -1,7 +1,7 @@
 # VÝUKA SLOVÍČEK
 
-Otevře se úvodní okno s vytvořenými knihovnami s možností spuštění (1), 
-editace knihovny (2) a smazání celé knihovny. Pod výčtem knihoven se nachází tlačítko 
+Otevře se úvodní okno s vytvořenými knihovnami s možností spuštění (1.0), 
+editace knihovny (2.0) a smazání celé knihovny. Pod výčtem knihoven se nachází tlačítko 
 s možností přidání nové knihovny(3.0).
 
 1.0 Spuštění: po kliknutí na tlačítko „Spustit“ se otevře nové okno s možností nastavení počtu testovaných slovíček. Dále má uživatel dvě možnosti k výběru. -> Spustit: (i) procvičování, nebo zvolí volbu (ii) spustit test).
