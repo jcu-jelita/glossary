@@ -1,11 +1,14 @@
 EN: *LEARNING WORD IN DIFFERENT LANGUAGES*
 
-1. 
+1.
     1.1. 
+    
       1. 
-      2. 
-   1.2. 
-   1.3. 
+      2. Run the test: A window appear with glossary (in various languages). User will think about his answer and afterwards he will write it below to the blank window. After pressing the button 'check' will user receive an information, if he wrote the translation correctly or not. After that he press the button 'continue'. A new word will display and all the steps are repeated with different word.
+      
+   1.2. Package editation: Ability to add or delete words into package.
+   
+   1.3. Adding a new package: Creating a package with optional name (for example Weather)
 
 CZ: *VÝUKA SLOVÍČEK*
 
