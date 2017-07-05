@@ -5,8 +5,7 @@
  */
 package glossary.gui;
 
-import glossary.global.CardList;
-import glossary.global.ListService;
+import glossary.global.*;
 
 import java.util.HashMap;
 
@@ -19,10 +18,13 @@ public class Temporary {
 
     public static void main(String[] args) {
                Frame frame = new Frame(new ListService() {
-
                    @Override
                    public CardList[] getLitOverview() {
-                       return new CardList[0];
+                       System.out.println("Fetching cardList");
+                       return new CardList[]{
+                               new CardList(0, "Prvni seznam", null),
+                               new CardList(1, "Druhý seznam", null)
+                       };
                    }
 
                    @Override
@@ -38,6 +40,21 @@ public class Temporary {
                    @Override
                    public boolean remove(int listId) {
                        return false;
+                   }
+               }, new TestService() {
+                   @Override
+                   public int getWordCount(int listId) {
+                       return 0;
+                   }
+
+                   @Override
+                   public WritingTest createWritingTest(int listId, int wordCount) {
+                       return null;
+                   }
+
+                   @Override
+                   public PracticeTest cretePracticeTest(int listId, int wordCount) {
+                       return null;
                    }
                });
                 frame.setVisible(true);

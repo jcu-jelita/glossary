@@ -5,7 +5,9 @@
  */
 package glossary.gui;
 
+import glossary.global.CardList;
 import glossary.global.ListService;
+import glossary.global.TestService;
 
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -16,12 +18,13 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 /**
- *
  * @author Papi
  */
 public class Frame extends JFrame {
 
     private final ListService listService;
+    private final TestService testService;
+
     private final int FRAME_WIDTH = 800;
     private final int FRAME_HEIGHT = 600;
     private final String CARD_MENU = "menu";
@@ -33,7 +36,8 @@ public class Frame extends JFrame {
     private JPanel jPanel_cards;
     private CardLayout cardLayout;
 
-    public Frame(ListService listService) {
+    public Frame(ListService listService, TestService testService) {
+        this.testService = testService;
         this.listService = listService;
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,8 +66,11 @@ public class Frame extends JFrame {
         JLabel s_list = new JLabel("Custom lists:");
         JButton bt_addList = new JButton("Add list");
         JButton bt_exit = new JButton("Exit");
-        JTable t_List = new JTable();
-        JScrollPane sc_List = new JScrollPane(t_List);
+        JList<CardList> cardNamesList = new JList<>(listService.getLitOverview());
+        cardNamesList.setCellRenderer(new CardListRenderer(this));
+
+        JScrollPane sc_List = new JScrollPane(cardNamesList);
+
         Dimension dim;
         Rectangle rec;
 
@@ -84,11 +91,11 @@ public class Frame extends JFrame {
         dim = new Dimension(200, 50);
         rec = new Rectangle(100, 470, dim.width, dim.height);
         bt_addList.setBounds(rec);
-        
+
         dim = new Dimension(200, 50);
         rec = new Rectangle(500, 470, dim.width, dim.height);
         bt_exit.setBounds(rec);
-        
+
         panel.add(s_programName);
         panel.add(s_list);
         panel.add(sc_List);
@@ -96,7 +103,7 @@ public class Frame extends JFrame {
         panel.add(bt_exit);
 
         bt_addList.addActionListener((ActionEvent e) -> cardLayout.show(jPanel_cards, CARD_CREATE));
-        
+
         bt_exit.addActionListener((ActionEvent e) -> System.exit(0));
 
         return panel;
@@ -115,12 +122,12 @@ public class Frame extends JFrame {
         JButton bt_confirm = new JButton("Confirm");
         JButton bt_cancel = new JButton("Cancel");
 
-        dim = new Dimension(600,50);
-        rec = new Rectangle(100,0, dim.width, dim.height);
+        dim = new Dimension(600, 50);
+        rec = new Rectangle(100, 0, dim.width, dim.height);
         setFontSize(s_createList, dim);
         s_createList.setBounds(rec);
 
-        
+
         dim = new Dimension(200, 50);
         rec = new Rectangle(100, 50, dim.width, dim.height);
         setFontSize(s_listName, dim);
@@ -141,8 +148,8 @@ public class Frame extends JFrame {
         dim = new Dimension(200, 50);
         rec = new Rectangle(500, 470, dim.width, dim.height);
         bt_cancel.setBounds(rec);
-        
-        
+
+
         panel.add(s_createList);
         panel.add(s_listName);
         panel.add(tf_listName);
@@ -150,8 +157,8 @@ public class Frame extends JFrame {
         panel.add(bt_confirm);
         panel.add(bt_cancel);
 
-        bt_cancel.addActionListener((ActionEvent e) ->cardLayout.show(jPanel_cards, CARD_MENU));
-        
+        bt_cancel.addActionListener((ActionEvent e) -> cardLayout.show(jPanel_cards, CARD_MENU));
+
 
         return panel;
     }
@@ -202,4 +209,12 @@ public class Frame extends JFrame {
         label.setFont(new Font("ComicSans", Font.PLAIN, fontSizeToUse));
     }
 
+    protected void startTest() {
+    }
+
+    protected void editList() {
+    }
+
+    protected void eraseList() {
+    }
 }
