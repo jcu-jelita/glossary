@@ -106,6 +106,5 @@ public class CardDaoImpl implements CardDao {
         }
 
         return list;
-
     }
 }

@@ -85,7 +85,7 @@ public class CardListDaoImpl extends BaseDaoImpl implements CardListDao {
             stmt.executeUpdate();
 
             ResultSet rs = stmt.getGeneratedKeys();
-            cardList.setId(rs.getInt("id"));
+            cardList.setId(rs.getInt(1));
 
             return cardList;
         } catch (SQLException e) {
