@@ -2,7 +2,7 @@ package glossary.engine.dao;
 
 import glossary.engine.model.Card;
 import glossary.engine.model.CardList;
-import junit.framework.TestCase;
+import glossary.mock.CardDaoMock;
 
 import java.util.List;
 

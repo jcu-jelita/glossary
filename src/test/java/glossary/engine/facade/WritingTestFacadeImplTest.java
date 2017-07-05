@@ -1,8 +1,7 @@
 package glossary.engine.facade;
 
 import glossary.engine.dao.CardDao;
-import glossary.engine.dao.CardDaoMock;
-import glossary.engine.model.Card;
+import glossary.mock.CardDaoMock;
 import junit.framework.TestCase;
 
 /**

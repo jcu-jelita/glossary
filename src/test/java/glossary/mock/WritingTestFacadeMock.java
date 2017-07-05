@@ -1,5 +1,6 @@
-package glossary.engine.facade;
+package glossary.mock;
 
+import glossary.engine.facade.WritingTestFacade;
 import glossary.engine.model.Card;
 
 /**

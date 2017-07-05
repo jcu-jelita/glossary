@@ -1,5 +1,6 @@
-package glossary.engine.dao;
+package glossary.mock;
 
+import glossary.engine.dao.CardListDao;
 import glossary.engine.model.Card;
 import glossary.engine.model.CardList;
 
