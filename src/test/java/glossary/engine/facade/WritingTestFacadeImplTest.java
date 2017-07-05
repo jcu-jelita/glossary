@@ -17,6 +17,7 @@ public class WritingTestFacadeImplTest extends TestCase {
         assertEquals(4,writingTestFacade.getNext().getId());
         assertNull(writingTestFacade.getNext());
 
+        assertTrue(false);
     }
 
     public void testVerify() throws Exception {
@@ -35,19 +36,19 @@ public class WritingTestFacadeImplTest extends TestCase {
     }
 
     public void testGetAnswer() throws Exception {
-
+        assertTrue(false);
     }
 
     public void testGetCorrectAnswers() throws Exception {
-
+        assertTrue(false);
     }
 
     public void testGetWrongAnswers() throws Exception {
-
+        assertTrue(false);
     }
 
     public void testGetMark() throws Exception {
-
+        assertTrue(false);
     }
 
 }

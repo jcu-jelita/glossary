@@ -63,6 +63,7 @@ public class CardDaoImplTest extends DatabaseTestCase {
     }
 
     public void testRemove() throws Exception {
+        assertTrue(false);
     }
 
     public void testCountByCardListId() throws Exception {
