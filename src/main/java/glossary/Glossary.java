@@ -15,6 +15,7 @@ public class Glossary {
             GlossaryEngine engine = new GlossaryEngine();
             Frame frame = new Frame(engine);
             frame.setVisible(true);
+            engine.close();
         } catch (DatabaseException e) {
             e.printStackTrace();
         }
