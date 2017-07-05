@@ -1,8 +1,8 @@
 **EN:** *VOCABULARY LEARNING*
 
-1. The main window is opened with made packages with possibility of (1.1) running, (1.2) editing the package or deleting the whole package. Below list of available packages is button with possibility to add new package (1.3).
+1. The main window is opened with made packages with possibility of (1.1) running, (1.2) editing the package or deleting the whole package. Below the list of available packages is the button with possibility to add a new package (1.3).
 
-    1.1. Running: Afrer pressing the button "Run" is opened a new window with chance to set an amount of words for self-testing.
+    1.1. Running: Afrer pressing the button "Run", new windows is opened, with option to set an amount of words for self-testing.
          After that user got two possibilities available. Run: (i)- exercising or he will choose choise (ii)- run the test).
     
       1. Exercising: A new window with a word is displayed (in whatever language). User will think of the answer and afterwards he press the button show. A correct answer is than displayed. In the next step user decides, wether was the was easy or hard. He will press the button with his decision and for that word is assigned a value which will involve next generating of words from specific list.
