@@ -3,12 +3,18 @@ package glossary.engine.dao;
 import glossary.engine.model.Card;
 import glossary.engine.model.CardList;
 
+import java.sql.Connection;
 import java.util.List;
 
 /**
  * Created by Pavel Máca <maca.pavel@gmail.com> on 04.07.2017.
  */
 public class CardListDaoImpl extends BaseDaoImpl implements CardListDao {
+
+    public CardListDaoImpl(Connection connection) {
+        super(connection);
+    }
+
     @Override
     public Card findByCardListId(int listId) {
         return null;
@@ -20,7 +26,7 @@ public class CardListDaoImpl extends BaseDaoImpl implements CardListDao {
     }
 
     @Override
-    public CardList save(CardList cardList) {
+    public CardList save(CardList cardList, List<Card> cards) {
         return null;
     }
 

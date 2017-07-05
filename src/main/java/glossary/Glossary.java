@@ -2,6 +2,7 @@ package glossary;
 
 
 import glossary.engine.GlossaryEngine;
+import glossary.global.exception.DatabaseException;
 
 /**
  * Created by Pavel Máca <maca.pavel@gmail.com> on 04.07.2017.
@@ -9,12 +10,11 @@ import glossary.engine.GlossaryEngine;
 public class Glossary {
 
     public static void main(String[] args) {
-        GlossaryEngine engine = new GlossaryEngine();
-
-        engine.getCardListDao().getLitOverview();
-
-       // Gui gui = new Gui(engine.getCardListDao(), engine.getTestService());
-
-        engine.close();
+        try {
+            GlossaryEngine engine = new GlossaryEngine();
+            //Gui gui = new Gui(engine);
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        }
     }
 }

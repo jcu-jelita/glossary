@@ -27,7 +27,7 @@ public class CardListDaoMock implements CardListDao {
     }
 
     @Override
-    public CardList save(CardList cardList) {
+    public CardList save(CardList cardList, List<Card> cards) {
         return null;
     }
 

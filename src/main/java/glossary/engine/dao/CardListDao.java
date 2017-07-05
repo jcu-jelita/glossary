@@ -12,11 +12,9 @@ import java.util.List;
  */
 public interface CardListDao {
 
-    Card findByCardListId(int listId);
-
     List<Card> findAll();
 
-    CardList save(CardList cardList);
+    CardList save(CardList cardList, List<Card> cards);
 
     boolean remove(int listId);
 }

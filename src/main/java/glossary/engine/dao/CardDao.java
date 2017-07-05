@@ -15,4 +15,6 @@ public interface CardDao {
     boolean save(Card card);
 
     boolean remove(int cardId);
+
+    int countByCardListId(int listId);
 }

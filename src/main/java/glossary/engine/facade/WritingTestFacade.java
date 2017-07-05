@@ -1,11 +1,12 @@
-package glossary.global;
+package glossary.engine.facade;
 
 import glossary.engine.model.Card;
 
 /**
- * Created by Papi on 4. 7. 2017.
+ * Created by Pavel Máca <maca.pavel@gmail.com> on 05.07.2017.
  */
-public interface WritingTest {
+public interface WritingTestFacade {
+
     Card getNext();
 
     boolean verify(String answer);
@@ -17,5 +18,4 @@ public interface WritingTest {
     int getWrongAnswers();
 
     int getMark();
-
 }
