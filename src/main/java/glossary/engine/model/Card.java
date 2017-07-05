@@ -17,7 +17,7 @@ public class Card {
         this.word2 = word2;
     }
 
-    public Card(String word1, String word2){
+    public Card(String word1, String word2) {
         this.word1 = word1;
         this.word2 = word2;
     }
@@ -36,5 +36,21 @@ public class Card {
 
     public String getWord2() {
         return word2;
+    }
+
+    public void setCardListId(int cardListId) {
+        this.cardListId = cardListId;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setWord1(String word1) {
+        this.word1 = word1;
+    }
+
+    public void setWord2(String word2) {
+        this.word2 = word2;
     }
 }
