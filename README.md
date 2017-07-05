@@ -12,7 +12,7 @@
    
    1.3. Adding a new package: Creating a package with optional name (for example Weather)
 
-![alternativní xs](file:///C:/Users/LeM/Desktop/EN.JPG)
+_____________________________________________________________________________
 
 **CZ:** *VÝUKA SLOVÍČEK*
 
@@ -29,4 +29,4 @@
 
    1.3. Přidání nové knihovny: tvorba knihovny s volitelným názvem (např. Weather). 
 
-![alternativní xs](file:///C:/Users/LeM/Desktop/CZ.JPG)
+
