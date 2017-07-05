@@ -29,14 +29,16 @@ public class CardListDaoMock implements CardListDao {
         list.add(cl6);
         return list;
     }
-
+    //TODO Pája review please
     @Override
     public CardList save(CardList cardList, List<Card> cards) {
-        return null;
+        CardList cl = new CardList(0,"Animals");
+
+        return cl;
     }
-    //Udělat konstruktor
+
     @Override
     public boolean remove(int listId) {
-        return false;
+        return true;
     }
 }
