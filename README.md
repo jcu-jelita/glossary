@@ -12,7 +12,7 @@
    
    1.3. Adding a new package: Creating a package with optional name (for example Weather)
    
-   ![EN][Dokuments/EN.jpg]
+   ![EN](https://github.com/jcu-jelita/glossary/blob/master/Documents/EN.JPG?raw=true)
 _____________________________________________________________________________
 
 **CZ:** *VÝUKA SLOVÍČEK*
@@ -30,4 +30,4 @@ _____________________________________________________________________________
 
    1.3. Přidání nové knihovny: tvorba knihovny s volitelným názvem (např. Weather). 
 
- ![CZ][Dokuments/CZ.jpg]
+ ![CZ](https://github.com/jcu-jelita/glossary/blob/master/Documents/EN.JPG?raw=true)
