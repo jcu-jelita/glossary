@@ -28,10 +28,10 @@ public class Frame extends JFrame {
     private final int FRAME_HEIGHT = 600;
     private final String CARD_MENU = "menu";
     private final String CARD_CREATE = "create";
-    private final String CARD_CHOOSER = "choose";
     private final String CARD_WRITING = "write";
     private final String CARD_PRACTISING = "practise";
     private final String CARD_RESULTS = "result";
+    WritingTestPanel writingTestPanel;
     private JPanel jPanel_cards;
     private CardLayout cardLayout;
     private DefaultTableModel defaultTableModel_create;
@@ -40,8 +40,9 @@ public class Frame extends JFrame {
     private JTable tableLibrary_create;
     private HashMap<Integer, Integer> parser;
     private int cardListId;
-    private final Object[] columnNames_create = new Object[]{"No.","Word", "Translation"};
-    private final Object[] columnNames_menu =new Object[]{"Name", "Run", "Edit", "Delete"};
+    private final Object[] COLUMN_NAMES_CREATE = new Object[]{"No.","Word", "Translation"};
+    private final Object[] COLUMN_NAMES_MENU =new Object[]{"Name", "Run", "Edit", "Delete"};
+
 
 
     public Frame(GlossaryEngine engine) {
@@ -60,7 +61,6 @@ public class Frame extends JFrame {
         jPanel_cards.setBackground(Color.red);
         jPanel_cards.add(createPanelMenu(), CARD_MENU);
         jPanel_cards.add(createPanelCreate(), CARD_CREATE);
-        jPanel_cards.add(createPanelChooser(), CARD_CHOOSER);
         jPanel_cards.add(createPanelPractising(), CARD_PRACTISING);
         jPanel_cards.add(createPanelWriting(), CARD_WRITING);
         jPanel_cards.add(createPanelResults(), CARD_RESULTS);
@@ -125,7 +125,7 @@ public class Frame extends JFrame {
      */
     private JTable createLibrariesTable() {
         DefaultTableModel dm = new DefaultTableModel();
-        dm.setDataVector(getDataVector(), columnNames_menu);
+        dm.setDataVector(getDataVector(), COLUMN_NAMES_MENU);
 
         tableLibraries_menu = new JTable(dm){
             public boolean isCellEditable(int row, int column){
@@ -283,7 +283,7 @@ public class Frame extends JFrame {
     }
 
     private JTable initLibraryTable(DefaultTableModel dm) {
-        dm.setDataVector(new Object[][]{}, columnNames_create);
+        dm.setDataVector(new Object[][]{}, COLUMN_NAMES_CREATE);
         JTable table = new JTable(dm){
             public boolean isCellEditable(int row, int column){
                 if (column == 0){
@@ -307,16 +307,11 @@ public class Frame extends JFrame {
         return panel;
     }
 
-    private JPanel createPanelChooser() {
-        JPanel frame = new JPanel(null);
-        frame.setBackground(Color.black);
-        return frame;
-    }
 
     private JPanel createPanelWriting() {
-        JPanel panel = new JPanel(null);
-        panel.setBackground(Color.black);
-        return panel;
+        writingTestPanel = new WritingTestPanel(null);
+        writingTestPanel.init();
+        return writingTestPanel;
     }
 
     private JPanel createPanelResults() {
@@ -352,6 +347,10 @@ public class Frame extends JFrame {
         CardList cardList = (CardList) tableLibraries_menu.getValueAt(row, 0);
         testSettingsDialog d = new testSettingsDialog();
         WritingTestFacade facade = d.createTest(cardList, engine);
+        if (facade!=null){
+            cardLayout.show(jPanel_cards, CARD_WRITING);
+            writingTestPanel.startTest(facade);
+        }
 
     }
 
@@ -359,7 +358,7 @@ public class Frame extends JFrame {
         System.out.println(row);
         CardList cardList = (CardList) tableLibraries_menu.getValueAt(row, 0);
         cardListId = cardList.getId();
-        defaultTableModel_create.setDataVector(prepareDataForTable_create(cardListId), columnNames_create);
+        defaultTableModel_create.setDataVector(prepareDataForTable_create(cardListId), COLUMN_NAMES_CREATE);
         tf_listName.setText(cardList.getName());
         cardLayout.show(jPanel_cards,CARD_CREATE);
     }
