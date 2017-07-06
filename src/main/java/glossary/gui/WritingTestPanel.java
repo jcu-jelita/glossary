@@ -1,6 +1,7 @@
 package glossary.gui;
 
 import glossary.engine.facade.WritingTestFacade;
+import glossary.engine.model.Card;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,53 +27,46 @@ public class WritingTestPanel extends JPanel{
         Rectangle rec;
 
 
-        dim = new Dimension(400, 150);
+        dim = new Dimension(400, 100);
         rec = new Rectangle(100, 100, dim.width, dim.height);
         word.setBounds(rec);
-        setFontSize(word, dim);
+        word.setFont(new Font("Arial", Font.BOLD, 30));
 
-        dim = new Dimension(400, 100);
-        rec = new Rectangle(100,300 , dim.width, dim.height);
-        setFontSize(lAnswer, dim);
+        dim = new Dimension(600, 80);
+        rec = new Rectangle(100,240 , dim.width, dim.height);
+        lAnswer.setFont(new Font("Arial", Font.BOLD, 20));
         lAnswer.setBounds(rec);
 
-
-
-        dim = new Dimension(400, 100);
-        rec = new Rectangle(100, 450, dim.width, dim.height);
+        dim = new Dimension(600, 50);
+        rec = new Rectangle(100, 350, dim.width, dim.height);
         translation.setBounds(rec);
+
+        dim = new Dimension(200,80);
+        rec = new Rectangle(500, 400, dim.width, dim.height);
+        buttonNext.setBounds(rec);
+
+
+
         add(word);
         add(translation);
         add(lAnswer);
+        add(buttonNext);
 
         buttonNext.addActionListener((ActionEvent e) -> {
-
+        continueTest();
         });
     }
-
     public void startTest(WritingTestFacade facade){
+        Card card = facade.getNext();
+        word.setText(card.getWord1());
+        translation.setText("");
+    }
+
+    public void continueTest(){
+        String customAnswer = translation.getText();
+
 
     }
 
-    private void setFontSize(JLabel label, Dimension labelSize) {
-        Font labelFont = label.getFont();
-        String labelText = label.getText();
-        int componentWidth;
-        int stringWidth = label.getFontMetrics(labelFont).stringWidth(labelText);
-        if (labelSize == null) {
-            componentWidth = label.getWidth();
-        } else {
-            componentWidth = labelSize.width;
-        }
-        double widthRatio = (double) componentWidth / (double) stringWidth;
-        int newFontSize = (int) (labelFont.getSize() * widthRatio);
-        int componentHeight;
-        if (labelSize == null) {
-            componentHeight = label.getHeight();
-        } else {
-            componentHeight = labelSize.height;
-        }
-        int fontSizeToUse = Math.min(newFontSize, componentHeight);
-        label.setFont(new Font("ComicSans", Font.PLAIN, fontSizeToUse));
-    }
+
 }
