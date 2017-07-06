@@ -2,11 +2,11 @@
 
 1. The main window is opened with made packages with possibility of (1.1) running, (1.2) editing the package or deleting the whole package. Below the list of available packages is the button with possibility to add a new package (1.3).
 
-    1.1. Running: Afrer pressing the button "Run", new windows is opened, with option to set an amount of words for self-testing.
+    1.1. Running: Afrer pressing the button "Run", new window is opened, with option to set an amount of words for self-testing.
          After that user got two possibilities available. Run: (i)- exercising or he will choose choise (ii)- run the test).
     
-      1. Exercising: A new window with a word is displayed (in whatever language). User will think of the answer and afterwards he press the button show. A correct answer is than displayed. In the next step user decides, wether was the was easy or hard. He will press the button with his decision and for that word is assigned a value which will involve next generating of words from specific list.
-      2. Run the test: A window appear with glossary (in various languages). User will think about his answer and afterwards he will write it below to the blank window. After pressing the button 'check' will user receive an information, if he wrote the translation correctly or not. After that he press the button 'continue'. A new word will display and all the steps are repeated with different word.
+      1. Exercising: A new window with a word is displayed (in whatever language). User will think of the answer and afterwards he will press the button "Show". A correct answer is than displayed. In the next step user decides, if the word was easy or hard. User will press the button with his decision and for that word is assigned a value which will involve next generating of words from specific list.
+      2. Run the test: A window appear with glossary (in various languages). User will think about his answer and afterwards he will write it below to the blank window. User will receive an information after pressing the button 'check', if he wrote the translation correctly or not. After that he press the button 'continue'. A new word will display and all the steps are repeated with different word.
       
    1.2. Package editation: Ability to add or delete words into package.
    
