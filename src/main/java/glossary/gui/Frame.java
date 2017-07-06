@@ -38,6 +38,9 @@ public class Frame extends JFrame {
     private JTable tableLibraries_menu;
     private JTable tableLibrary_create;
     private HashMap<Integer, Integer> parser;
+    private int cardListId;
+    private final Object[] columnNames_create = new Object[]{"No.","Word", "Translation"};
+    private final Object[] columnNames_menu =new Object[]{"Name", "Run", "Edit", "Delete"};
 
 
     public Frame(GlossaryEngine engine) {
@@ -118,7 +121,7 @@ public class Frame extends JFrame {
      */
     private JTable createLibrariesTable() {
         DefaultTableModel dm = new DefaultTableModel();
-        dm.setDataVector(getDataVector(), new Object[]{"Name", "Run", "Edit", "Delete"});
+        dm.setDataVector(getDataVector(), columnNames_menu);
 
         tableLibraries_menu = new JTable(dm){
             public boolean isCellEditable(int row, int column){
@@ -224,7 +227,12 @@ public class Frame extends JFrame {
                 JOptionPane.showMessageDialog(this, "Library name is empty");
                 return;
             }
-            CardList cardList = new CardList(tf_listName.getText());
+            CardList cardList;
+            if (cardListId==-1){
+                cardList = new CardList(tf_listName.getText());
+            } else {
+                cardList = new CardList(cardListId, tf_listName.getText());
+            }
             ArrayList<Card> cards = new ArrayList<>();
             StringBuilder sb = new StringBuilder();
             sb.append("Can not save your list\nMissing full pairs:\n");
@@ -244,7 +252,6 @@ public class Frame extends JFrame {
                             missingPairs = true;
                             sb.append("Row no. ").append(i+1).append("\n");
                         }
-
                     }
                 }
             }
@@ -253,7 +260,12 @@ public class Frame extends JFrame {
             } else {
                 CardList tmp =  engine.getCardListDao().save(cardList, cards);
                 DefaultTableModel dem = (DefaultTableModel) tableLibraries_menu.getModel();
-                dem.addRow(new Object[]{tmp, "run.png", "edit.png","delete.png"});
+                if (cardListId !=-1){
+                    replaceLibraryInMenu(cardListId,new Object[]{tmp, "run.png", "edit.png","delete.png"});
+                } else {
+                    dem.addRow(new Object[]{tmp, "run.png", "edit.png","delete.png"});
+                }
+                cardListId = -1;
                 clearPanelCreate();
                 cardLayout.show(jPanel_cards, CARD_MENU);
             }
@@ -267,7 +279,7 @@ public class Frame extends JFrame {
     }
 
     private JTable initLibraryTable(DefaultTableModel dm) {
-        dm.setDataVector(new Object[][]{}, prepareColumns_create());
+        dm.setDataVector(new Object[][]{}, columnNames_create);
         JTable table = new JTable(dm){
             public boolean isCellEditable(int row, int column){
                 if (column == 0){
@@ -340,15 +352,12 @@ public class Frame extends JFrame {
     protected void editList(int row) {
         System.out.println(row);
         CardList cardList = (CardList) tableLibraries_menu.getValueAt(row, 0);
-
-        defaultTableModel_create.setDataVector(prepareDataForTable_create(cardList.getId()), prepareColumns_create());
-
+        cardListId = cardList.getId();
+        defaultTableModel_create.setDataVector(prepareDataForTable_create(cardListId), columnNames_create);
+        tf_listName.setText(cardList.getName());
         cardLayout.show(jPanel_cards,CARD_CREATE);
     }
 
-    private Object[] prepareColumns_create() {
-        return new Object[]{"No.","Word", "Translation"};
-    }
 
     private Object[][] prepareDataForTable_create(int id) {
         java.util.List<Card> cards = engine.getCardDao().findAllByCardListId(id);
@@ -388,6 +397,16 @@ public class Frame extends JFrame {
                 options,
                 options[1]);
         return (n == 0);
+    }
+
+    private void replaceLibraryInMenu(int cardListId, Object[] data){
+        DefaultTableModel dem = (DefaultTableModel) tableLibraries_menu.getModel();
+        for (int i = 0; i<dem.getRowCount(); i++){
+            if (cardListId == ((CardList)dem.getValueAt(i, 0)).getId()){
+                dem.removeRow(i);
+                dem.addRow(data);
+            }
+        }
     }
 
 
