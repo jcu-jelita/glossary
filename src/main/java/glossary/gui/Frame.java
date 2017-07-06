@@ -6,6 +6,7 @@
 package glossary.gui;
 
 import glossary.engine.GlossaryEngine;
+import glossary.engine.facade.WritingTestFacade;
 import glossary.engine.model.Card;
 import glossary.engine.model.CardList;
 
@@ -110,7 +111,10 @@ public class Frame extends JFrame {
 
         bt_addList.addActionListener((ActionEvent e) -> cardLayout.show(jPanel_cards, CARD_CREATE));
 
-        bt_exit.addActionListener((ActionEvent e) -> System.exit(0));
+        bt_exit.addActionListener((ActionEvent e) -> {
+            engine.close();
+            System.exit(0);
+        });
 
         return panel;
     }
@@ -346,7 +350,9 @@ public class Frame extends JFrame {
     protected void startTest(int row) {
         System.out.println(row);
         CardList cardList = (CardList) tableLibraries_menu.getValueAt(row, 0);
-        System.out.println("Start test of " + cardList.getId());
+        testSettingsDialog d = new testSettingsDialog();
+        WritingTestFacade facade = d.createTest(cardList, engine);
+
     }
 
     protected void editList(int row) {
