@@ -309,7 +309,7 @@ public class Frame extends JFrame {
 
 
     private JPanel createPanelWriting() {
-        writingTestPanel = new WritingTestPanel(null);
+        writingTestPanel = new WritingTestPanel(null, this);
         writingTestPanel.init();
         return writingTestPanel;
     }
@@ -428,6 +428,9 @@ public class Frame extends JFrame {
         }
 
         return vector;
+    }
 
+    public void showMenu(){
+        cardLayout.show(jPanel_cards, CARD_MENU);
     }
 }
