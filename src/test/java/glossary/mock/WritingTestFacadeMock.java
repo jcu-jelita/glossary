@@ -13,12 +13,12 @@ public class WritingTestFacadeMock implements WritingTestFacade {
     }
 
     @Override
-    public boolean verify(String answer) {
+    public boolean verify(String answer) throws NullPointerException {
         return false;
     }
 
     @Override
-    public String getAnswer() {
+    public String getAnswer() throws NullPointerException {
         return null;
     }
 

@@ -36,12 +36,12 @@ public class WritingTestFacadeImpl implements WritingTestFacade {
     }
 
     @Override
-    public boolean verify(String answer) {
+    public boolean verify(String answer) throws NullPointerException {
         if (current == null) {
             return false;
         }
 
-        boolean status = current.getWord2().equals(answer);
+        boolean status = current.getWord2().toLowerCase().equals(answer.toLowerCase());
         if (status) {
             correctAnswers++;
         } else {
@@ -51,7 +51,7 @@ public class WritingTestFacadeImpl implements WritingTestFacade {
     }
 
     @Override
-    public String getAnswer() {
+    public String getAnswer() throws NullPointerException {
         return current.getWord2();
     }
 
@@ -67,7 +67,10 @@ public class WritingTestFacadeImpl implements WritingTestFacade {
 
     @Override
     public int getMark() {
-        double percent = cards.size() / correctAnswers * 100;
+        if(correctAnswers == 0 ){
+            return 5;
+        }
+        double percent =  1.0 * correctAnswers / (correctAnswers + incorrectAnswers) * 100;
         if (percent > 90) {
             return 1;
         } else if (percent > 80) {

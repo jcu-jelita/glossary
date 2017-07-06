@@ -20,12 +20,12 @@ public interface WritingTestFacade {
      * @param answer User answer to compare agains Card translation
      * @return true if word2 match word1
      */
-    boolean verify(String answer);
+    boolean verify(String answer) throws NullPointerException;
 
     /**
      * @return Correct answer for current card
      */
-    String getAnswer();
+    String getAnswer() throws NullPointerException;
 
     /**
      * @return number of correct answers
@@ -38,7 +38,7 @@ public interface WritingTestFacade {
     int getWrongAnswers();
 
     /**
-     * @return return mark by percetige of succes over 90% is 1; 75% is 2; 50% = 3; 30% = 4; otherwise 5
+     * @return return mark by percetige of succes over 90% is 1; 80% is 2; 50% = 3; 30% = 4; otherwise 5
      */
     int getMark();
 }
