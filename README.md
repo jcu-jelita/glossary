@@ -11,6 +11,8 @@
    1.2. Package editation: Ability to add or delete words into package.
    
    1.3. Adding a new package: Creating a package with optional name (for example Weather)
+   
+   ![EN][Dokuments/EN.jpg]
 _____________________________________________________________________________
 
 **CZ:** *VÝUKA SLOVÍČEK*
@@ -28,4 +30,4 @@ _____________________________________________________________________________
 
    1.3. Přidání nové knihovny: tvorba knihovny s volitelným názvem (např. Weather). 
 
-
+ ![CZ][Dokuments/CZ.jpg]
