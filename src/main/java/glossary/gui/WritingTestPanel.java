@@ -86,6 +86,7 @@ public class WritingTestPanel extends JPanel{
         Card card = facade.getNext();
         if (card == null){
             finish();
+            return;
         }
         word.setText(card.getWord1());
         translation.setText("");
