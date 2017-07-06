@@ -33,9 +33,7 @@ public class CardListDaoMock implements CardListDao {
     //TODO Pája review please
     @Override
     public CardList save(CardList cardList, List<Card> cards) {
-        CardList cl = new CardList(0,"Animals");
-
-        return cl;
+        return new CardList(0,"Animals");
     }
 
     @Override
