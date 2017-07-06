@@ -14,15 +14,19 @@ public class WritingTestPanel extends JPanel{
 
     private JTextField translation;
     private JLabel  word;
+    private JLabel hint;
+    private WritingTestFacade facade;
     public WritingTestPanel(LayoutManager layout) {
         super(layout);
     }
+
 
     public void init(){
         word = new JLabel("WORD");
         JLabel lAnswer = new JLabel("Your answer is:");
         translation = new JTextField("CUSTOM TRANSLATION");
         JButton buttonNext = new JButton("Next");
+        hint = new JLabel("HINT");
         Dimension dim;
         Rectangle rec;
 
@@ -45,27 +49,50 @@ public class WritingTestPanel extends JPanel{
         rec = new Rectangle(500, 400, dim.width, dim.height);
         buttonNext.setBounds(rec);
 
+        dim = new Dimension(400,100);
+        rec = new Rectangle(100, 400, dim.width, dim.height);
+        hint.setFont(new Font("Arial", Font.BOLD, 15));
+        hint.setBounds(rec);
 
 
         add(word);
         add(translation);
         add(lAnswer);
         add(buttonNext);
+        add(hint);
 
+        hint.setVisible(false);
         buttonNext.addActionListener((ActionEvent e) -> {
         continueTest();
         });
     }
     public void startTest(WritingTestFacade facade){
+        this.facade = facade;
+        prepareQuestion();
+    }
+
+    public void continueTest(){
+        hint.setVisible(false);
+        String customAnswer = translation.getText();
+        if (facade.verify(customAnswer)){
+            prepareQuestion();
+        } else {
+            hint.setText("HINT: "+facade.getAnswer());
+            hint.setVisible(true);
+        }
+    }
+
+    private void prepareQuestion(){
         Card card = facade.getNext();
+        if (card == null){
+            finish();
+        }
         word.setText(card.getWord1());
         translation.setText("");
     }
 
-    public void continueTest(){
-        String customAnswer = translation.getText();
-
-
+    private void finish(){
+        System.out.println("Finish");
     }
 
 
